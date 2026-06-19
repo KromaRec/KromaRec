@@ -15,4 +15,7 @@
 <p align="center">
   <a href="https://github.com/Lukiblokck/KromaRec">Server Repository</a> · 
   <a href="https://github.com/Lukiblokck/KromaRecClient">Client Repository</a>
+  <a href="https://github.com/Lukiblokck/KromaNet">KromaRec's website</a> · 
+  <a href="https://github.com/Lukiblokck/KromaNetBot">KromaNet Discord bot</a> · 
+  <a href="https://https://discord.gg/qwXY9QG6qm">Discord</a>
 </p>
