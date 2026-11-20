@@ -1,0 +1,21 @@
+export KROMAREC_BIND='127.0.0.1:8080'
+export KROMAREC_DOMAIN='rec.example.net'
+export KROMAREC_ASSETS='/usr/local/share/kromarec/assets'
+export KROMAREC_DB='/var/lib/kromarec/kromarec.sqlite3'
+export KROMAREC_MAX_CONNECTIONS='128'
+export KROMAREC_PASSWORD_SIGNUP='false'
+# Set a private random value of at least 32 bytes before enabling authentication.
+# export KROMAREC_JWT_SECRET='replace-with-a-random-secret'
+
+# Match the app IDs configured in both 20230414 clients.
+# export KROMAREC_PHOTON_REALTIME_APP_ID=''
+# export KROMAREC_PHOTON_VOICE_APP_ID=''
+# export KROMAREC_PHOTON_CHAT_APP_ID=''
+# export KROMAREC_PHOTON_REGION='us'
+
+# Required for multiplayer. Deploy the Luxon Game lease extension from 0.10.1.
+# export KROMAREC_PHOTON_GATE_ADDR='127.0.0.1:8081'
+# export KROMAREC_PHOTON_GATE_KEY='paste output of openssl rand -hex 32'
+
+# Optional fixed-label HTTP, Photon and scene diagnostics.
+# export KROMAREC_TRACE_STARTUP='true'

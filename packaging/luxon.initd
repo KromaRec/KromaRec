@@ -1,0 +1,19 @@
+#!/sbin/openrc-run
+
+description="KromaRec Luxon Realtime transport"
+command="/usr/local/libexec/luxon-kromarec"
+command_user="kromarec:kromarec"
+supervisor="supervise-daemon"
+directory="/etc/kromarec/luxon"
+output_log="/var/log/kromarec/luxon.log"
+error_log="$output_log"
+retry="TERM/5/KILL/2"
+umask="077"
+
+depend() {
+    need net kromarec
+}
+
+start_pre() {
+    checkpath --file --owner kromarec:kromarec --mode 0640 "$output_log"
+}

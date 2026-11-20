@@ -1,0 +1,180 @@
+diff --git a/Patches/SendRequestPatch.cs b/Patches/SendRequestPatch.cs
+index 5d6ec23..97bf238 100644
+--- a/Patches/SendRequestPatch.cs
++++ b/Patches/SendRequestPatch.cs
+@@ -31,34 +31,18 @@ public class SendRequestPatch
+         return false;
+     }
+ 
+-    // Cap logged bodies so a large response/request doesn't flood the log.
+-    private const int MaxLoggedBodyLength = 10000;
+-
+-    private static string Truncate(string s)
+-    {
+-        if (string.IsNullOrEmpty(s) || s.Length <= MaxLoggedBodyLength)
+-            return s;
+-        return s.Substring(0, MaxLoggedBodyLength) + $"... <truncated {s.Length - MaxLoggedBodyLength} chars>";
+-    }
+-
+     [HarmonyPatch(typeof(HTTPManager), "SendRequest", [typeof(HTTPRequest)])]
+     public class ConnectToRecNetPatch
+     {
+         private static void Prefix(ref HTTPRequest request)
+         {
++            // Host/path/status diagnostics only. In particular auth and connection-info
++            // bodies contain live passwords or tokens.
+             var debug = Plugin.Debug.Value && !IsIgnoredForLogging(request.Uri.AbsoluteUri);
+ 
+             if (debug)
+             {
+-                var entityBody = request.GetEntityBody();
+-                string body;
+-                if (entityBody == null)
+-                    body = "<none>";
+-                else if (IsBinaryContentType(request.GetFirstHeaderValue("content-type")) || LooksBinary(entityBody))
+-                    body = BinaryPreview(entityBody);
+-                else
+-                    body = System.Text.Encoding.UTF8.GetString(entityBody);
+-                Plugin.Log.LogInfo($"[HTTP] {request.MethodType} {request.Uri.AbsoluteUri} body={Truncate(body)}");
++                Plugin.Log.LogInfo($"[HTTP] {request.MethodType} {request.Uri.Host}{request.Uri.AbsolutePath}");
+             }
+ 
+             var host = request.Uri.Host;
+@@ -73,6 +57,7 @@ public class SendRequestPatch
+                     Plugin.Log.LogInfo($"[HTTP] intercepted {host} -> {newHost}");
+             }
+ 
++            KromaRecPhotonTicket.Observe(request);
+             if (debug)
+                 LogResponseWhenDone(request);
+         }
+@@ -86,7 +71,7 @@ public class SendRequestPatch
+         try
+         {
+             var original = request.Callback;
+-            var url = request.Uri.AbsoluteUri;
++            var url = request.Uri.Host + request.Uri.AbsolutePath;
+ 
+             request.Callback = DelegateSupport.ConvertDelegate<OnRequestFinishedDelegate>(
+                 (Action<HTTPRequest, HTTPResponse>)((req, resp) =>
+@@ -95,15 +80,7 @@ public class SendRequestPatch
+                         Plugin.Log.LogWarning($"[HTTP] <- {url} NO RESPONSE (state={req.State})");
+                     else
+                     {
+-                        string text;
+-                        if (IsBinaryContentType(resp.GetFirstHeaderValue("content-type")))
+-                            text = "<binary>";
+-                        else
+-                        {
+-                            text = resp.DataAsText;
+-                            if (string.IsNullOrEmpty(text)) text = "<empty>";
+-                        }
+-                        var msg = $"[HTTP] <- {resp.StatusCode} {url} body={Truncate(text)}";
++                        var msg = $"[HTTP] <- {resp.StatusCode} {url}";
+                         if (resp.StatusCode is >= 200 and < 300)
+                             Plugin.Log.LogInfo(msg);
+                         else
+@@ -115,72 +92,8 @@ public class SendRequestPatch
+         }
+         catch (Exception e)
+         {
+-            Plugin.Log.LogError($"[HTTP] failed to attach response logger: {e}");
++            Plugin.Log.LogError($"[HTTP] failed to attach response logger: {e.GetType().Name}");
+         }
+     }
+ 
+-    // Content-Type prefixes/keywords we treat as textual; anything else is logged as <binary> so we
+-    // don't dump image/asset bytes into the log.
+-    private static readonly string[] TextContentTypes =
+-    {
+-        "text/", "application/json", "application/xml", "application/javascript",
+-        "application/x-www-form-urlencoded", "+json", "+xml",
+-    };
+-
+-    // True if the body is (probably) binary and shouldn't be logged as text. Defaults to text when
+-    // there's no Content-Type, so we err toward logging rather than hiding.
+-    private static bool IsBinaryContentType(string contentType)
+-    {
+-        if (string.IsNullOrEmpty(contentType)) return false;
+-
+-        foreach (var t in TextContentTypes)
+-            if (contentType.Contains(t, StringComparison.OrdinalIgnoreCase))
+-                return false;
+-        return true;
+-    }
+-
+-    // Render the leading bytes of a binary body as text so structured framing (e.g. multipart form
+-    // boundaries and part headers) stays readable, while raw bytes are shown as \xNN escapes. Capped
+-    // at MaxLoggedBodyLength since the interesting framing is at the front.
+-    private static string BinaryPreview(byte[] data)
+-    {
+-        if (data.Length == 0) return "<binary empty>";
+-
+-        var sb = new System.Text.StringBuilder(MaxLoggedBodyLength + 32);
+-        sb.Append("<binary ").Append(data.Length).Append(" bytes> ");
+-        var i = 0;
+-        // Cap on rendered length, not byte count: escapes expand a byte to 4 chars, so this keeps the
+-        // preview near MaxLoggedBodyLength and avoids a second pass by Truncate at the log site.
+-        for (; i < data.Length && sb.Length < MaxLoggedBodyLength; i++)
+-        {
+-            var b = data[i];
+-            if (b == 0x09 || b == 0x0A || b == 0x0D || (b >= 0x20 && b < 0x7F))
+-                sb.Append((char)b);
+-            else
+-                sb.Append("\\x").Append(b.ToString("x2"));
+-        }
+-        if (i < data.Length)
+-            sb.Append($"... <truncated {data.Length - i} bytes>");
+-        return sb.ToString();
+-    }
+-
+-    // Content sniff for raw request bytes — the Content-Type header isn't reliably set at
+-    // SendRequest time (e.g. multipart form bodies set it lazily, and the body still embeds the
+-    // raw image), so look at the bytes: a NUL byte, or a high ratio of non-text control bytes in
+-    // the first chunk, means it's binary (or binary-mixed like a multipart upload).
+-    private static bool LooksBinary(byte[] data)
+-    {
+-        if (data.Length == 0) return false;
+-
+-        var sample = Math.Min(data.Length, 4096);
+-        var nonText = 0;
+-        for (var i = 0; i < sample; i++)
+-        {
+-            var b = data[i];
+-            if (b == 0) return true;
+-            // Control chars other than tab/newline/carriage-return.
+-            if (b < 0x20 && b != 0x09 && b != 0x0A && b != 0x0D) nonText++;
+-        }
+-        return nonText * 100 / sample > 10;
+-    }
+ }
+diff --git a/Plugin.cs b/Plugin.cs
+index cbb30f2..3dd68d2 100644
+--- a/Plugin.cs
++++ b/Plugin.cs
+@@ -14,6 +14,7 @@ public class Plugin : BasePlugin
+ {
+     internal static new ManualLogSource Log;
+ 
++    public static ConfigEntry<string> KromaRecMatchHost { get; private set; }
+     public static ConfigEntry<string> AppIdRT { get; private set; }
+     public static ConfigEntry<string> AppIdVoice { get; private set; }
+     public static ConfigEntry<string> AppIdChat { get; private set; }
+@@ -37,6 +38,7 @@ public class Plugin : BasePlugin
+     {
+         Log = base.Log;
+ 
++        KromaRecMatchHost = Config.Bind("KromaRec", "Match HTTPS Host", "", "Exact hostname of the KromaRec match service.");
+         AppIdRT = Config.Bind("Photon", "App Id Realtime", "", "Photon Realtime App ID");
+         AppIdVoice = Config.Bind("Photon", "App Id Voice", "", "Photon Voice App ID");
+         AppIdChat = Config.Bind("Photon", "App Id Chat", "", "Photon Chat App ID");
+@@ -60,7 +62,8 @@ public class Plugin : BasePlugin
+         // OnSceneLoaded until it takes, since the native setters can refuse this early.
+         Patches.UnityTelemetryPatch.Apply();
+ 
+-        Harmony.CreateAndPatchAll(typeof(Plugin).Assembly);
++        var harmony = Harmony.CreateAndPatchAll(typeof(Plugin).Assembly);
++        Patches.KromaRecPhotonTicket.Install(harmony);
+ 
+         SceneManager.sceneLoaded += (Action<Scene, LoadSceneMode>)OnSceneLoaded;
+     }

@@ -1,0 +1,20 @@
+#!/sbin/openrc-run
+
+description="KromaRec HTTP backend"
+command="/usr/local/libexec/kromarec"
+command_user="kromarec:kromarec"
+supervisor="supervise-daemon"
+directory="/var/lib/kromarec"
+output_log="/var/log/kromarec/server.log"
+error_log="/var/log/kromarec/server.log"
+retry="TERM/12/KILL/5"
+umask="077"
+
+depend() {
+    need net
+}
+
+start_pre() {
+    checkpath --directory --owner kromarec:kromarec --mode 0750 /var/lib/kromarec /var/log/kromarec
+    checkpath --file --owner kromarec:kromarec --mode 0640 "$error_log"
+}

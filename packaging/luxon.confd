@@ -1,0 +1,4 @@
+# Use the 0.10.1 patched Luxon. The 0.10.0 binary lacks Game leases.
+# Set the same address and independent random key in both conf.d files.
+export KROMAREC_PHOTON_GATE_ADDR='127.0.0.1:8081'
+# export KROMAREC_PHOTON_GATE_KEY='paste output of openssl rand -hex 32'

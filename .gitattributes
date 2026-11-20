@@ -1,0 +1,2 @@
+packaging/luxon/*.patch whitespace=-blank-at-eol
+packaging/client/*.patch whitespace=-blank-at-eol

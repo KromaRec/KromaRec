@@ -1,0 +1,9 @@
+# Replace rec.example.test with your chosen DNS suffix on both lines.
+# Point the apex and subdomains at this server and trust the issuing CA
+# on both clients. Replace tls internal with your own TLS configuration as needed.
+rec.example.test, *.rec.example.test {
+    tls internal
+    # Caddy forwards the request Host and handles WebSocket upgrades.
+    # The private Photon authorization listener is never proxied.
+    reverse_proxy 127.0.0.1:8080
+}

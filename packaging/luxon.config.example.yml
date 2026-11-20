@@ -1,0 +1,20 @@
+# Luxon 1.5. Copy to config.yml beside the launch working directory.
+# Loopback advertised addresses are for the protocol test. For two physical machines,
+# replace the advertised IPs with the host's client-reachable IP,
+# and restrict UDP access to your two test machines or private network.
+Servers:
+  NameServer:
+    - port: 5058
+      external_address: 127.0.0.1:5058
+  MasterServer:
+    - port: 5055
+      external_address: 127.0.0.1:5055
+  GameServer:
+    - port: 5056
+      external_address: 127.0.0.1:5056
+Regions:
+  - us
+EnableIPv6: false
+MaxConnections: 32
+HTTP:
+  enabled: false

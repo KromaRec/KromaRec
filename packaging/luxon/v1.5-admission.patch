@@ -1,0 +1,428 @@
+diff --git a/include/luxon/server/peer_persistence.hpp b/include/luxon/server/peer_persistence.hpp
+index 4b13496..d07a19d 100644
+--- a/include/luxon/server/peer_persistence.hpp
++++ b/include/luxon/server/peer_persistence.hpp
+@@ -24,6 +24,7 @@ class PeerPersistent {
+ public:
+     std::shared_ptr<App> app;
+     std::string user_id, token;
++    std::string kromarec_ticket, kromarec_app;
+ 
+     void reset_invitation() {
+         invitation = {};
+diff --git a/src/authentication.cpp b/src/authentication.cpp
+index 3cf6ea5..37b26e0 100644
+--- a/src/authentication.cpp
++++ b/src/authentication.cpp
+@@ -2,6 +2,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause
+ 
+ #include "authentication.hpp"
++#include "kromarec_gate.hpp"
+ #include "global.hpp"
+ #include "peer.hpp"
+ #include "peer_persistence.hpp"
+@@ -31,31 +32,6 @@ using StandardAuth =
+           Parameter<std::string, AppVersion, true>, Parameter<std::string, UserId, true>>;
+ } // namespace models
+ 
+-namespace {
+-std::string generate_user_id() {
+-    static std::mt19937 gen{std::random_device{}()};
+-    const std::string_view charset = "0123456789ABCDEF";
+-    std::uniform_int_distribution<size_t> dist(0, charset.size() - 1);
+-
+-    std::string fres(32, '\0');
+-    std::ranges::generate(fres, [&] { return charset[dist(gen)]; });
+-    return fres;
+-}
+-
+-std::string get_anonymous_user_id(unsigned custom_anonymous_uid_mode, std::string_view prefix, std::string requested_uid) {
+-    if (custom_anonymous_uid_mode == AppSettings::CustomAnonymousUIDMode::ForceRandom)
+-        return std::format("{}{}", prefix, generate_user_id());
+-
+-    if (requested_uid.empty())
+-        requested_uid = generate_user_id();
+-
+-    if (custom_anonymous_uid_mode == AppSettings::CustomAnonymousUIDMode::AllowWithPrefix)
+-        return std::format("{}{}", prefix, requested_uid);
+-    else
+-        return requested_uid;
+-}
+-} // namespace
+-
+ Awaitable<ser::OperationResponseMessage> authenticate(ServerManager& server_manager, Peer& peer, const ser::OperationRequestMessage& req,
+                                                       const enet::EnetCommandHeader& cmd_header, bool refresh_token) {
+     ZoneScoped;
+@@ -90,7 +66,6 @@ Awaitable<ser::OperationResponseMessage> authenticate(ServerManager& server_mana
+         const std::string *version_ptr = params->get<DictKeyCodes::LoadBalancing::AppVersion>();
+         const std::string app_version = version_ptr ? *version_ptr : "(poor attempt at emulating null app version)";
+ 
+-        peer.log->info("Client is using app {} (version {})", app_id, version_ptr ? *version_ptr : "(null)");
+         p->app = App::get(server_manager, app_id, app_version);
+ 
+         // Make sure app is available
+@@ -106,72 +81,24 @@ Awaitable<ser::OperationResponseMessage> authenticate(ServerManager& server_mana
+                        .return_code = ErrorCodes::Throttling::MaxCcuReached,
+                        .debug_message = std::format("Max CCU of {} reached", app_settings.max_peers)};
+ 
+-        // Extract authentication parameters
+-        const std::string *uid = params->get<DictKeyCodes::LoadBalancing::UserId>();
+-        const uint8_t auth_type = params->get<DictKeyCodes::AuthAndLobby::ClientAuthenticationType>();
+-
+-        if (app_settings.auth_mode == AppSettings::AuthMode::Weak || (app_settings.auth_mode == AppSettings::AuthMode::Anonymous && auth_type == 0)) {
+-            // Weak authentication (all pass) or anonymous authentication (type 0 passes)
+-            p->user_id = get_anonymous_user_id(app_settings.custom_anonymous_uid_mode, app_settings.anonymous_uid_prefix, uid ? *uid : "");
+-
+-        } else if (auth_type == 0) {
+-            // Type 0 (Anonymous) specified or implied, but server strictly requires valid authentication
+-            lco_return{.operation_code = req.operation_code,
+-                       .return_code = ErrorCodes::Auth::CustomAuthenticationFailed,
+-                       .debug_message = "Anonymous authentication is not allowed"};
+-
+-        } else {
+-            // Strict mode with custom authentication type. A UserId is strictly mandatory here.
+-            if (!uid || uid->empty()) {
+-                lco_return{.operation_code = req.operation_code,
+-                           .return_code = ErrorCodes::Auth::InvalidAuthentication,
+-                           .debug_message = "User ID is required for custom authentication"};
+-            }
+-
+-            // Check if the specific authentication provider is configured and allowed
+-            std::optional<AuthProviderSettings> auth_provider_opt;
+-#ifdef LUXON_SERVER_ENABLE_SETTINGS_DATABASE
+-            if (auto& settings_manager = server_manager.settings_manager)
+-                auth_provider_opt = settings_manager->get_auth_provider(app_settings.appid, auth_type);
+-#endif
+-
+-            if (!auth_provider_opt || !auth_provider_opt->is_allowed) {
+-                lco_return{.operation_code = req.operation_code,
+-                           .return_code = ErrorCodes::Auth::CustomAuthenticationFailed,
+-                           .debug_message = "Authentication provider is not allowed"};
+-            }
+-
+-#ifdef LUXON_SERVER_ENABLE_PLUGINS
+-            const std::string& auth_params = params->get<DictKeyCodes::AuthAndLobby::ClientAuthenticationParameters>();
+-
+-            // Fetch the provider URL (or fallback to empty string) to pass to the plugin
+-            std::string plugin_context = auth_provider_opt->auth_url.value_or("");
+-
+-            // Attempt to dispatch custom authentication via registered plugins
+-            if (auto plugin_res = lco_await auth_plugins::registry::call(server_manager, auth_type, *uid, auth_params, plugin_context,
+-                                                                         auth_provider_opt->secret, auth_provider_opt->auth_url)) {
+-                if (plugin_res->has_value()) {
+-                    p->user_id = plugin_res->value();
+-                } else {
+-                    auto err_resp = plugin_res->error();
+-                    err_resp.operation_code = req.operation_code;
+-                    lco_return err_resp;
+-                }
+-            } else {
+-                lco_return{.operation_code = req.operation_code,
+-                           .return_code = ErrorCodes::Auth::CustomAuthenticationFailed,
+-                           .debug_message = "Authentication type not available"};
+-            }
+-#else
+-            lco_return{.operation_code = req.operation_code,
+-                       .return_code = ErrorCodes::Auth::CustomAuthenticationFailed,
+-                       .debug_message = "Authentication plugins are disabled"};
+-#endif
+-        }
++        auto ticket = kromarec::ticket_from_parameters(
++            params->get<DictKeyCodes::AuthAndLobby::ClientAuthenticationParameters>());
++        const auto identity = kromarec::authorize("auth", app_id, ticket, "");
++        if (!identity)
++            lco_return{.operation_code = req.operation_code, .return_code = ErrorCodes::Auth::InvalidAuthentication,
++                       .debug_message = "KromaRec credential required"};
++        p->user_id = *identity;
++        p->kromarec_app = app_id;
++        p->kromarec_ticket = ticket;
+ 
+         peer.persistent = std::move(p);
+     }
+ 
++    if (token_auth && peer.persistent &&
++        kromarec::authorize("auth", peer.persistent->kromarec_app, peer.persistent->kromarec_ticket, "")
++            != std::optional(peer.persistent->user_id))
++        peer.persistent.reset();
++
+     // Check for success
+     if (!peer.persistent) {
+         // Handle authentication failure
+diff --git a/src/handler_gameserver.cpp b/src/handler_gameserver.cpp
+index 020cf04..07ea0c3 100644
+--- a/src/handler_gameserver.cpp
++++ b/src/handler_gameserver.cpp
+@@ -1,6 +1,7 @@
+ // Copyright (c) 2026, the Luxon Server contributors
+ // SPDX-License-Identifier: BSD-3-Clause
+ 
++#include "kromarec_gate.hpp"
+ #include "handler_gameserver.hpp"
+ #include "game.hpp"
+ #ifdef LUXON_SERVER_ENABLE_PLUGINS
+@@ -326,6 +327,16 @@ Awaitable<> GameServerHandler::HandleOperationRequest(ser::OperationRequestMessa
+                 lco_return;
+             }
+ 
++            const auto& authorization = *peer_->persistent;
++            if (kromarec::authorize("join", authorization.kromarec_app,
++                                    authorization.kromarec_ticket, game->id)
++                    != std::optional(authorization.user_id)) {
++                send(proto_->Serialize(ser::OperationResponseMessage{
++                    .operation_code = req.operation_code,
++                    .return_code = ErrorCodes::Matchmaking::ServerForbidden}));
++                lco_return;
++            }
++
+             if (is_master) {
+ #ifdef LUXON_SERVER_ENABLE_PLUGINS
+                 if (current_game_->plugins.empty())
+@@ -622,48 +633,7 @@ Awaitable<> GameServerHandler::HandleOperationRequest(ser::OperationRequestMessa
+             lco_return;
+         }
+         }
+-    } else if (allow_unsolicited_) {
+-        // Unsolicited join or create
+-        if (req.operation_code == OpCodes::Matchmaking::JoinGame || req.operation_code == OpCodes::Matchmaking::CreateGame) {
+-            const auto params = models::JoinOrCreateGame::decode(req);
+-            if (!params) {
+-                send(proto_->Serialize(params.error()));
+-                lco_return;
+-            }
+-
+-            // Find or create game
+-            auto& app = *peer_->persistent->app;
+-            const auto& app_games = app.get_games();
+-            auto game_id = params->get<DictKeyCodes::GameAndActor::GameId>();
+-
+-            std::shared_ptr<Game> target_game;
+-            if (auto game_res = app_games.find(game_id); game_res != app_games.end()) {
+-                target_game = game_res->second.lock();
+-            } else {
+-                bool should_create = (req.operation_code == OpCodes::Matchmaking::CreateGame) || params->get<DictKeyCodes::AuthAndLobby::CreateIfNotExists>();
+-
+-                if (should_create) {
+-                    auto new_game = app.get_lobby()->create_game(std::string(game_id), "", true);
+-                    if (!new_game) {
+-                        send(proto_->Serialize(new_game.error()));
+-                        lco_return;
+-                    }
+-                    target_game = *new_game;
+-                } else {
+-                    const ser::OperationResponseMessage resp{
+-                        .operation_code = req.operation_code, .return_code = ErrorCodes::Matchmaking::GameIdNotExists, .debug_message = "Game does not exist"};
+-                    send(proto_->Serialize(resp));
+-                    lco_return;
+-                }
+-            }
+ 
+-            // Set as current game and disallow unsolicited join to prevent infinite recursion
+-            peer_->persistent->invite(std::move(target_game), req.operation_code == OpCodes::Matchmaking::CreateGame);
+-            allow_unsolicited_ = false;
+-
+-            // Now that invitation is populated it will execute main logic block
+-            lco_return lco_await HandleOperationRequest(std::move(req), is_encrypted, cmd_header);
+-        }
+     }
+ 
+     lco_return lco_await HandlerBase::HandleOperationRequest(std::move(req), is_encrypted, cmd_header);
+diff --git a/src/handler_masterserver.cpp b/src/handler_masterserver.cpp
+index 561cbd3..31c7b08 100644
+--- a/src/handler_masterserver.cpp
++++ b/src/handler_masterserver.cpp
+@@ -1,6 +1,7 @@
+ // Copyright (c) 2026, the Luxon Server contributors
+ // SPDX-License-Identifier: BSD-3-Clause
+ 
++#include "kromarec_gate.hpp"
+ #include "handler_masterserver.hpp"
+ #include "global.hpp"
+ #include "data_model.hpp"
+@@ -289,6 +290,16 @@ Awaitable<> MasterServerHandler::HandleOperationRequest(ser::OperationRequestMes
+ 
+             std::string game_id = params->get<DictKeyCodes::GameAndActor::GameId>();
+ 
++            const auto& authorization = *peer_->persistent;
++            if (kromarec::authorize("join", authorization.kromarec_app,
++                                    authorization.kromarec_ticket, game_id)
++                    != std::optional(authorization.user_id)) {
++                send(proto_->Serialize(ser::OperationResponseMessage{
++                    .operation_code = req.operation_code,
++                    .return_code = ErrorCodes::Matchmaking::ServerForbidden}));
++                lco_return;
++            }
++
+             LUXON_SERVER_HOOKPOINT(MasterServer_HandleOperationRequest_CreateGame, game_id);
+ 
+             // Get lobby
+@@ -349,6 +360,16 @@ Awaitable<> MasterServerHandler::HandleOperationRequest(ser::OperationRequestMes
+ 
+             const std::string& game_id = params->get<DictKeyCodes::GameAndActor::GameId>();
+ 
++            const auto& authorization = *peer_->persistent;
++            if (kromarec::authorize("join", authorization.kromarec_app,
++                                    authorization.kromarec_ticket, game_id)
++                    != std::optional(authorization.user_id)) {
++                send(proto_->Serialize(ser::OperationResponseMessage{
++                    .operation_code = req.operation_code,
++                    .return_code = ErrorCodes::Matchmaking::ServerForbidden}));
++                lco_return;
++            }
++
+             LUXON_SERVER_HOOKPOINT(MasterServer_HandleOperationRequest_JoinGame, game_id, params->get<DictKeyCodes::AuthAndLobby::CreateIfNotExists>());
+ 
+             // Get lobby
+@@ -434,147 +455,12 @@ Awaitable<> MasterServerHandler::HandleOperationRequest(ser::OperationRequestMes
+             lco_return;
+         }
+ 
+-        case OpCodes::Matchmaking::JoinRandomGame: {
+-            ZoneScopedN("HandleOperationRequest_JoinRandomGame");
+-
+-            const auto params = models::JoinRandomGame::decode(req);
+-            if (!params) {
+-                send(proto_->Serialize(params.error()));
+-                lco_return;
+-            }
+-
+-            // Get lobby
+-            auto lobby = get_requested_lobby(req);
+-            if (!lobby) {
+-                send(proto_->Serialize(lobby.error()));
+-                lco_return;
+-            }
+-
+-            std::shared_ptr<Game> selected_game;
+-
+-            // Select a matching game
+-            if (lobby.value()->type == LobbyType::SqlLobby) {
+-                std::string sql_filter = params->get<DictKeyCodes::RoutingAndEvents::Data>();
+-                try {
+-                    auto game_ids = lobby.value()->query_lobbies(sql_filter);
+-                    for (const auto& id : game_ids) {
+-                        const auto& app_games = app.get_games();
+-                        if (auto res = app_games.find(id); res != app_games.end()) {
+-                            if (auto game = res->second.lock()) {
+-                                // Make sure game is joinable
+-                                if (game->validate_join(peer_->persistent->user_id).first == ErrorCodes::Core::Ok) {
+-                                    selected_game = game;
+-                                    break;
+-                                }
+-                            }
+-                        }
+-                    }
+-                } catch (const std::exception& e) {
+-                    ser::OperationResponseMessage resp{
+-                        .operation_code = OpCodes::Matchmaking::JoinRandomGame, .return_code = ErrorCodes::Core::OperationInvalid, .debug_message = e.what()};
+-                    send(proto_->Serialize(resp));
+-                    lco_return;
+-                }
+-            } else {
+-                ser::Hashtable expected_props;
+-                if (auto p = params->get<DictKeyCodes::Properties::GameProperties>())
+-                    expected_props = *p;
+-
+-                // Collect candidates
+-                std::vector<std::shared_ptr<Game>> candidates;
+-                candidates.reserve(std::min<size_t>(lobby.value()->games.size(), 500)); // Better to allocate more than less?
+-
+-                for (auto& weak_game : lobby.value()->games) {
+-                    auto game = weak_game.lock();
+-                    if (!game)
+-                        continue;
+-
+-                    // Make sure game is joinable  TODO: Pass expected user count too
+-                    if (game->validate_join(peer_->persistent->user_id).first != ErrorCodes::Core::Ok)
+-                        continue;
+-
+-                    // Property filter
+-                    if (!game->expect_game_props(expected_props))
+-                        continue;
+-
+-                    candidates.push_back(std::move(game));
+-                }
+-
+-                // The previous allocation might've been quite a bit overzealous, fix that
+-                candidates.shrink_to_fit();
+-
+-                if (!candidates.empty()) {
+-                    switch (params->get<DictKeyCodes::LoadBalancing::MatchmakingType>()) {
+-                    case MatchmakingType::SerialMatching: {
+-                        // Prioritize games with fewer players
+-                        std::ranges::sort(candidates,
+-                                          [](const std::shared_ptr<Game>& a, const std::shared_ptr<Game>& b) { return a->peers.size() < b->peers.size(); });
+-                        selected_game = candidates.front();
+-                    } break;
+-                    case MatchmakingType::FillRoom: {
+-                        // Prioritize games with more players
+-                        std::ranges::sort(candidates,
+-                                          [](const std::shared_ptr<Game>& a, const std::shared_ptr<Game>& b) { return a->peers.size() > b->peers.size(); });
+-                        selected_game = candidates.front();
+-                    } break;
+-                    case MatchmakingType::RandomMatching: {
+-                        // Uniform distribution
+-                        static std::mt19937 rng(peer_->enet_peer->bytes_out());
+-                        std::uniform_int_distribution<size_t> dist(0, candidates.size() - 1);
+-                        selected_game = candidates[dist(rng)];
+-                    } break;
+-                    }
+-                }
+-            }
+-
+-            // Handle no-match condition
+-            bool is_new = false;
+-            if (!selected_game) {
+-                if (!params->get<DictKeyCodes::AuthAndLobby::CreateIfNotExists>()) {
+-                    const ser::OperationResponseMessage resp{.operation_code = OpCodes::Matchmaking::JoinRandomGame,
+-                                                             .return_code = ErrorCodes::Matchmaking::NoRandomMatchFound,
+-                                                             .debug_message = "No matching game found"};
+-                    send(proto_->Serialize(resp));
+-                    lco_return;
+-                }
+-
+-                // Generate game ID if empty
+-                std::string game_id = params->get<DictKeyCodes::GameAndActor::GameId>();
+-                if (game_id.empty())
+-                    game_id = generate_game_id(peer_->persistent->user_id);
+-
+-                // Create new game
+-                auto game_expected = lobby.value()->create_game(std::move(game_id), get_random_gameserver_base_addr());
+-                if (!game_expected) {
+-                    send(proto_->Serialize(game_expected.error()));
+-                    lco_return;
+-                }
+-                selected_game = *game_expected;
+-                is_new = true;
+-            }
+-
+-            // Expect users  TODO: expect all given users
+-            selected_game->expected_users.emplace(peer_->persistent->user_id);
+-
+-            // Send Response
+-            ser::OperationResponseMessage resp;
+-            resp.operation_code = OpCodes::Matchmaking::JoinRandomGame;
+-            resp.return_code = ErrorCodes::Core::Ok;
+-
+-            // Payload similar to Create/Join Game
+-            resp.parameters[DictKeyCodes::LoadBalancing::Address] =
+-                std::string(server_manager_.resolve_server_address(ServerType::GameServer, peer_->transport_protocol, selected_game->server_address));
+-            resp.parameters[DictKeyCodes::LoadBalancing::Token] = peer_->persistent->token;
+-            resp.parameters[DictKeyCodes::GameAndActor::GameId] = selected_game->id;
+-
+-            // Synchronize game, peer and token
+-            peer_->log->info("Matchmaking success. Joining game: {}", selected_game->id);
+-            peer_->persistent->invite(std::move(selected_game), is_new);
+-            sync_persistent_peer(server_manager_, *peer_->persistent);
+-
+-            send(proto_->Serialize(resp));
++        case OpCodes::Matchmaking::JoinRandomGame:
++            send(proto_->Serialize(ser::OperationResponseMessage{
++                .operation_code = req.operation_code,
++                .return_code = ErrorCodes::Matchmaking::ServerForbidden}));
+             lco_return;
+-        }
++
+ 
+         case OpCodes::Social::FindFriends: {
+             ZoneScopedN("HandleOperationRequest_FindFriends");

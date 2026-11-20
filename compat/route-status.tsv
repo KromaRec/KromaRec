@@ -1,0 +1,690 @@
+service	method	path	source	line	status	note
+accounts	PUT	/account/me/profileimage	apps/accounts/src/accounts.app.ts	1152	not yet implemented	
+accounts	PUT	/account/me/bannerimage	apps/accounts/src/accounts.app.ts	1124	not yet implemented	
+accounts	PUT	/account/me/emoji	apps/accounts/src/accounts.app.ts	1079	not yet implemented	
+accounts	PUT	/account/me/bio	apps/accounts/src/accounts.app.ts	1040	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+accounts	PUT	/account/me/personalpronouns	apps/accounts/src/accounts.app.ts	1012	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+accounts	PUT	/account/me/identityflags	apps/accounts/src/accounts.app.ts	979	not yet implemented	
+accounts	POST	/account/me/phone	apps/accounts/src/accounts.app.ts	953	not yet implemented	
+accounts	POST	/account/me/email/confirm	apps/accounts/src/accounts.app.ts	874	not yet implemented	
+accounts	GET	/account/me/email/pending	apps/accounts/src/accounts.app.ts	847	not yet implemented	
+accounts	POST	/account/me/email	apps/accounts/src/accounts.app.ts	773	not yet implemented	
+accounts	PUT	/account/me/username	apps/accounts/src/accounts.app.ts	689	not yet implemented	
+accounts	PUT	/account/me/displayname	apps/accounts/src/accounts.app.ts	656	not yet implemented	
+accounts	GET	/accountprivacysettings/:id{[0-9]+}	apps/accounts/src/accounts.app.ts	627	not yet implemented	
+accounts	GET	/parentalcontrol/me	apps/accounts/src/accounts.app.ts	605	not yet implemented	
+accounts	POST	/account/create	apps/accounts/src/accounts.app.ts	576	implemented but awaiting client verification	Requires explicit signup opt-in
+accounts	GET	/account/:id	apps/accounts/src/accounts.app.ts	545	implemented but awaiting client verification	
+accounts	GET	/account/:id/bio	apps/accounts/src/accounts.app.ts	517	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+accounts	POST	/account/bulk	apps/accounts/src/accounts.app.ts	515	not yet implemented	
+accounts	GET	/account/bulk	apps/accounts/src/accounts.app.ts	510	not yet implemented	
+accounts	GET	/account/username/:name	apps/accounts/src/accounts.app.ts	479	implemented but awaiting client verification	
+accounts	GET	/account/search	apps/accounts/src/accounts.app.ts	439	not yet implemented	
+accounts	GET	/account/me	apps/accounts/src/accounts.app.ts	411	implemented but awaiting client verification	
+accounts	GET	/emojiConfig/whitelistedEmojis	apps/accounts/src/accounts.app.ts	396	implemented but awaiting client verification	
+accounts	GET	/	apps/accounts/src/accounts.app.ts	382	implemented but awaiting client verification	
+accounts	GET	/openapi.json	apps/accounts/src/accounts.app.ts	1181	not yet implemented	
+ai	POST	/realtime-session/create	apps/ai/src/ai.app.ts	347	not yet implemented	
+ai	GET	/makerai/user/balances	apps/ai/src/ai.app.ts	303	not yet implemented	
+ai	GET	/makerai/user/access	apps/ai/src/ai.app.ts	263	not yet implemented	
+ai	GET	/roomieai/user/facts	apps/ai/src/ai.app.ts	225	not yet implemented	
+ai	GET	/roomieai/user/access	apps/ai/src/ai.app.ts	171	not yet implemented	
+ai	GET	/gameai/room/:roomId{[0-9]+}/spendsummary	apps/ai/src/ai.app.ts	136	not yet implemented	
+ai	GET	/gameai/user/access	apps/ai/src/ai.app.ts	103	not yet implemented	
+ai	GET	/	apps/ai/src/ai.app.ts	90	not yet implemented	
+ai	GET	/openapi.json	apps/ai/src/ai.app.ts	390	not yet implemented	
+api	MOUNT	/	apps/api/src/api.app.ts	68	not yet implemented	
+api	MOUNT	/	apps/api/src/api.app.ts	67	not yet implemented	
+api	MOUNT	/	apps/api/src/api.app.ts	66	not yet implemented	
+api	MOUNT	/	apps/api/src/api.app.ts	65	not yet implemented	
+api	MOUNT	/	apps/api/src/api.app.ts	64	not yet implemented	
+api	MOUNT	/	apps/api/src/api.app.ts	63	not yet implemented	
+api	MOUNT	/	apps/api/src/api.app.ts	62	not yet implemented	
+api	MOUNT	/	apps/api/src/api.app.ts	61	not yet implemented	
+api	MOUNT	/	apps/api/src/api.app.ts	60	not yet implemented	
+api	MOUNT	/	apps/api/src/api.app.ts	59	not yet implemented	
+api	MOUNT	/	apps/api/src/api.app.ts	58	not yet implemented	
+api	MOUNT	/	apps/api/src/api.app.ts	57	not yet implemented	
+api	GET	/openapi.json	apps/api/src/api.app.ts	72	not yet implemented	
+api	GET	/iam/me/channels/:type	apps/api/src/routes/account.ts	12	not yet implemented	
+api	POST	/api/customAvatarItems/v1	apps/api/src/routes/avatar-studio.ts	78	not yet implemented	
+api	GET	/api/customAvatarItems/v1/me	apps/api/src/routes/avatar-studio.ts	58	not yet implemented	
+api	POST	/api/inventions/v2/delete	apps/api/src/routes/avatar.ts	2658	not yet implemented	
+api	POST	/api/inventions/v2/unpublish	apps/api/src/routes/avatar.ts	2607	not yet implemented	
+api	POST	/api/inventions/v4/publish	apps/api/src/routes/avatar.ts	2529	not yet implemented	
+api	POST	/api/inventions/v2/update	apps/api/src/routes/avatar.ts	2428	not yet implemented	
+api	PUT	/api/inventions/v2/metadata	apps/api/src/routes/avatar.ts	2333	not yet implemented	
+api	POST	/api/inventions/v9/save	apps/api/src/routes/avatar.ts	2274	not yet implemented	
+api	POST	/api/inventions/v6/save	apps/api/src/routes/avatar.ts	2229	not yet implemented	
+api	POST	/api/inventions/v1/report	apps/api/src/routes/avatar.ts	2162	not yet implemented	
+api	POST	/api/inventions/v2/cheer	apps/api/src/routes/avatar.ts	2120	not yet implemented	
+api	POST	/api/inventions/v1/cheer	apps/api/src/routes/avatar.ts	2082	not yet implemented	
+api	POST	/api/customAvatarItems/v1/:id{[0-9a-fA-F-]{36}}/report	apps/api/src/routes/avatar.ts	2018	not yet implemented	
+api	GET	/api/inventions/v2/mine	apps/api/src/routes/avatar.ts	1986	not yet implemented	
+api	GET	/api/inventions/v2/search	apps/api/src/routes/avatar.ts	1950	not yet implemented	
+api	GET	/api/inventions/v1/fromcreators	apps/api/src/routes/avatar.ts	1921	not yet implemented	
+api	GET	/api/inventions/v1/featureddormskins	apps/api/src/routes/avatar.ts	1906	not yet implemented	
+api	GET	/api/inventions/v1/featured	apps/api/src/routes/avatar.ts	1885	not yet implemented	
+api	GET	/api/inventions/v1/toptoday	apps/api/src/routes/avatar.ts	1862	not yet implemented	
+api	GET	/api/inventions/v1/details	apps/api/src/routes/avatar.ts	1835	not yet implemented	
+api	POST	/api/inventions/v1/settags	apps/api/src/routes/avatar.ts	1771	not yet implemented	
+api	POST	/api/inventions/v1/updateprice	apps/api/src/routes/avatar.ts	1726	not yet implemented	
+api	GET	/api/inventions/v3/publish	apps/api/src/routes/avatar.ts	1679	not yet implemented	
+api	GET	/api/inventions/v1/update	apps/api/src/routes/avatar.ts	1602	not yet implemented	
+api	POST	/api/inventions/v1/update	apps/api/src/routes/avatar.ts	1602	not yet implemented	
+api	GET	/api/inventions/v1/version	apps/api/src/routes/avatar.ts	1553	not yet implemented	
+api	GET	/api/inventions/v1/personaldetails/:inventionId{[0-9]+}	apps/api/src/routes/avatar.ts	1526	not yet implemented	
+api	GET	/api/inventions/v1/room	apps/api/src/routes/avatar.ts	1502	not yet implemented	
+api	GET	/api/inventions/v1/fulllineageowner	apps/api/src/routes/avatar.ts	1470	not yet implemented	
+api	POST	/api/inventions/v2/batch	apps/api/src/routes/avatar.ts	1446	not yet implemented	
+api	GET	/api/inventions/v2/batch	apps/api/src/routes/avatar.ts	1424	not yet implemented	
+api	GET	/api/inventions/v1/tagfilters	apps/api/src/routes/avatar.ts	1405	not yet implemented	
+api	GET	/api/inventions/v1	apps/api/src/routes/avatar.ts	1382	not yet implemented	
+api	GET	/outfits/me/saved	apps/api/src/routes/avatar.ts	1351	not yet implemented	
+api	POST	/outfits/bulk	apps/api/src/routes/avatar.ts	1284	not yet implemented	
+api	PUT	/outfits/me	apps/api/src/routes/avatar.ts	1210	not yet implemented	
+api	GET	/outfits/me	apps/api/src/routes/avatar.ts	1167	not yet implemented	
+api	POST	/api/customAvatarItems/GetCustomAvatarItemCurrentSavesForLegacyAvatarItems	apps/api/src/routes/avatar.ts	1146	not yet implemented	
+api	GET	/api/customAvatarItems/v2/fromCreator/:accountId{[0-9]+}	apps/api/src/routes/avatar.ts	1121	not yet implemented	
+api	POST	/api/customAvatarItems/v1/bulk	apps/api/src/routes/avatar.ts	1057	not yet implemented	
+api	GET	/api/customAvatarItems/v1/hot	apps/api/src/routes/avatar.ts	1026	not yet implemented	
+api	GET	/api/customAvatarItems/v1/search	apps/api/src/routes/avatar.ts	878	not yet implemented	
+api	GET	/api/customAvatarItems/v1/featured	apps/api/src/routes/avatar.ts	857	not yet implemented	
+api	DELETE	/api/customAvatarItems/v1/:id{[0-9a-fA-F-]{36}}	apps/api/src/routes/avatar.ts	793	not yet implemented	
+api	PUT	/api/customAvatarItems/v1/:id{[0-9a-fA-F-]{36}}	apps/api/src/routes/avatar.ts	712	not yet implemented	
+api	POST	/api/customAvatarItems/v1	apps/api/src/routes/avatar.ts	567	not yet implemented	
+api	GET	/api/customAvatarItems/v1/minPriceForPublicItem	apps/api/src/routes/avatar.ts	555	not yet implemented	
+api	GET	/api/customAvatarItems/v1/isRenderingEnabled	apps/api/src/routes/avatar.ts	545	not yet implemented	
+api	GET	/api/customAvatarItems/v1/isCreationEnabled	apps/api/src/routes/avatar.ts	535	not yet implemented	
+api	GET	/api/customAvatarItems/v1/isCreationAllowedForAccount	apps/api/src/routes/avatar.ts	522	not yet implemented	
+api	POST	/api/avatar/v1/lockeditems/bulk	apps/api/src/routes/avatar.ts	501	not yet implemented	
+api	POST	/api/avatar/v2/gifts/generate	apps/api/src/routes/avatar.ts	441	not yet implemented	
+api	GET	/voice/config	apps/api/src/routes/config.ts	199	implemented but awaiting client verification	
+api	POST	/statsigUserProperties	apps/api/src/routes/config.ts	182	implemented but awaiting client verification	Returns disabled for the no-telemetry requirement
+api	GET	/api/gameconfigs/v1/all	apps/api/src/routes/config.ts	155	implemented but awaiting client verification	
+api	GET	/api/versioncheck/islandedversions	apps/api/src/routes/config.ts	128	implemented but awaiting client verification	
+api	GET	/api/versioncheck/v4	apps/api/src/routes/config.ts	102	implemented but awaiting client verification	
+api	GET	/api/config/v2	apps/api/src/routes/config.ts	89	implemented but awaiting client verification	
+api	GET	/api/config/v1/backtrace	apps/api/src/routes/config.ts	64	implemented but awaiting client verification	
+api	GET	/api/config/v1/azurespeech	apps/api/src/routes/config.ts	47	implemented but awaiting client verification	
+api	GET	/api/config/v1/amplitude	apps/api/src/routes/config.ts	26	implemented but awaiting client verification	
+api	GET	/api/playerevents/v1/:eventId{[0-9]+}	apps/api/src/routes/events.ts	1344	not yet implemented	
+api	GET	/api/playerevents/v1/:eventId{[0-9]+}/responses	apps/api/src/routes/events.ts	1320	not yet implemented	
+api	PUT	/api/playerevents/v2/:eventId{[0-9]+}/name	apps/api/src/routes/events.ts	1288	not yet implemented	
+api	PUT	/api/playerevents/v2/:eventId{[0-9]+}/description	apps/api/src/routes/events.ts	1255	not yet implemented	
+api	PUT	/api/playerevents/v2/:eventId{[0-9]+}/tags	apps/api/src/routes/events.ts	1221	not yet implemented	
+api	PUT	/api/playerevents/v2/:eventId{[0-9]+}/accessibility	apps/api/src/routes/events.ts	1191	not yet implemented	
+api	PUT	/api/playerevents/v2/:eventId{[0-9]+}/time	apps/api/src/routes/events.ts	1142	not yet implemented	
+api	POST	/api/playerevents/v2/:eventId{[0-9]+}	apps/api/src/routes/events.ts	1075	not yet implemented	
+api	GET	/api/playerevents/v2/:eventId{[0-9]+}	apps/api/src/routes/events.ts	1049	not yet implemented	
+api	POST	/api/playerevents/v2/delete/:eventId{[0-9]+}	apps/api/src/routes/events.ts	996	not yet implemented	
+api	DELETE	/api/playerevents/v2/delete/:eventId{[0-9]+}	apps/api/src/routes/events.ts	996	not yet implemented	
+api	POST	/api/playerevents/v2	apps/api/src/routes/events.ts	934	not yet implemented	
+api	POST	/api/playerevents/v1/bulkInvite	apps/api/src/routes/events.ts	857	not yet implemented	
+api	POST	/api/playerevents/v1/report	apps/api/src/routes/events.ts	793	not yet implemented	
+api	POST	/api/playerevents/v1/respond	apps/api/src/routes/events.ts	739	not yet implemented	
+api	GET	/api/playerevents/v1/bulk	apps/api/src/routes/events.ts	716	not yet implemented	
+api	POST	/api/playerevents/v1/bulk	apps/api/src/routes/events.ts	687	not yet implemented	
+api	GET	/api/playerevents/v1/search	apps/api/src/routes/events.ts	632	not yet implemented	
+api	GET	/api/playerevents/v1/searchlive	apps/api/src/routes/events.ts	617	not yet implemented	
+api	GET	/api/playerevents/v1/room/:roomId{[0-9]+}	apps/api/src/routes/events.ts	587	not yet implemented	
+api	GET	/api/playerevents/v1/club/:clubId{[0-9]+}	apps/api/src/routes/events.ts	561	not yet implemented	
+api	GET	/api/playerevents/v1/clubs	apps/api/src/routes/events.ts	543	not yet implemented	
+api	GET	/api/playerevents/v1/tagfilters	apps/api/src/routes/events.ts	496	not yet implemented	
+api	GET	/api/playerevents/v1/all/:playerId{[0-9]+}	apps/api/src/routes/events.ts	463	not yet implemented	
+api	GET	/api/playerevents/v1/all	apps/api/src/routes/events.ts	431	not yet implemented	
+api	GET	/api/playerevents/v1	apps/api/src/routes/events.ts	406	not yet implemented	
+api	POST	/api/gamesight/event	apps/api/src/routes/gameplay.ts	311	not yet implemented	
+api	GET	/api/announcement/v1/get	apps/api/src/routes/gameplay.ts	299	not yet implemented	
+api	GET	/api/CircuitChipLists/:list	apps/api/src/routes/gameplay.ts	280	not yet implemented	
+api	GET	/api/communityboard/v2/current	apps/api/src/routes/gameplay.ts	259	not yet implemented	
+api	GET	/api/keepsakes/categories	apps/api/src/routes/gameplay.ts	240	not yet implemented	
+api	GET	/api/keepsakes/rooms/:roomId	apps/api/src/routes/gameplay.ts	222	not yet implemented	
+api	GET	/api/keepsakes/globalconfig	apps/api/src/routes/gameplay.ts	209	not yet implemented	
+api	GET	/api/activities/charades/v1/words/:activity	apps/api/src/routes/gameplay.ts	192	not yet implemented	
+api	POST	/api/sanitize/v2/isAllowed/bulk	apps/api/src/routes/gameplay.ts	153	not yet implemented	
+api	POST	/api/sanitize/v1/isPure	apps/api/src/routes/gameplay.ts	126	not yet implemented	
+api	POST	/api/sanitize/v1	apps/api/src/routes/gameplay.ts	101	not yet implemented	
+api	PUT	/api/players/v1/playerPhotoTaggingSetting	apps/api/src/routes/images.ts	914	not yet implemented	
+api	GET	/api/players/v1/playerPhotoTaggingSetting	apps/api/src/routes/images.ts	885	not yet implemented	
+api	POST	/api/images/v5/cheered/bulk	apps/api/src/routes/images.ts	857	not yet implemented	
+api	GET	/api/images/v5/cheered/bulk	apps/api/src/routes/images.ts	833	not yet implemented	
+api	POST	/api/images/v1/cheer	apps/api/src/routes/images.ts	797	not yet implemented	
+api	POST	/api/images/v1/:id{[0-9]+}/report	apps/api/src/routes/images.ts	758	not yet implemented	
+api	GET	/api/images/v6/:id{[0-9]+}	apps/api/src/routes/images.ts	718	not yet implemented	
+api	GET	/api/images/v6	apps/api/src/routes/images.ts	686	not yet implemented	
+api	GET	/api/images/v5/bulk	apps/api/src/routes/images.ts	652	not yet implemented	
+api	GET	/api/images/v1/slideshow	apps/api/src/routes/images.ts	607	not yet implemented	
+api	GET	/api/images/v3/feed/player/:playerId{[0-9]+}	apps/api/src/routes/images.ts	572	not yet implemented	
+api	GET	/api/images/v5/player/:playerId{[0-9]+}	apps/api/src/routes/images.ts	543	not yet implemented	
+api	GET	/api/images/v4/player/:playerId{[0-9]+}	apps/api/src/routes/images.ts	517	not yet implemented	
+api	GET	/api/images/v4/room/:roomId{[0-9]+}	apps/api/src/routes/images.ts	480	not yet implemented	
+api	POST	/api/images/v1/modifydescription	apps/api/src/routes/images.ts	427	not yet implemented	
+api	POST	/api/images/v2/modifyaccessibility	apps/api/src/routes/images.ts	379	not yet implemented	
+api	POST	/api/images/v1/deletesaved	apps/api/src/routes/images.ts	324	not yet implemented	
+api	POST	/api/images/v4/uploadsaved	apps/api/src/routes/images.ts	212	not yet implemented	
+api	GET	/api/images/v2/named	apps/api/src/routes/images.ts	201	not yet implemented	
+api	GET	/api/consumables/v2/getUnlocked	apps/api/src/routes/inventory.ts	27	not yet implemented	
+api	GET	/api/equipment/v2/getUnlocked	apps/api/src/routes/inventory.ts	14	not yet implemented	
+api	POST	/api/PlayerReporting/v1/deviceId	apps/api/src/routes/moderation.ts	1064	not yet implemented	Pinned upstream accepts form oldDeviceId/newDeviceId/platform but its empty-array response reportedly hangs the game. Awaiting native contract evidence.
+api	POST	/api/playerwarnings	apps/api/src/routes/moderation.ts	999	not yet implemented	
+api	POST	/api/PlayerReporting/v1/roomModKick	apps/api/src/routes/moderation.ts	906	not yet implemented	
+api	POST	/api/PlayerReporting/v1/instantKick	apps/api/src/routes/moderation.ts	799	not yet implemented	
+api	POST	/api/PlayerReporting/v3/voteToKick	apps/api/src/routes/moderation.ts	614	not yet implemented	
+api	POST	/api/chatreport/createChatReport	apps/api/src/routes/moderation.ts	532	not yet implemented	
+api	POST	/api/PlayerReporting/v3/create	apps/api/src/routes/moderation.ts	475	not yet implemented	
+api	POST	/api/PlayerReporting/v1/hile	apps/api/src/routes/moderation.ts	460	not yet implemented	
+api	GET	/api/referee/files	apps/api/src/routes/moderation.ts	447	not yet implemented	
+api	POST	/api/PlayerReporting/v1/referee	apps/api/src/routes/moderation.ts	429	not yet implemented	
+api	GET	/api/PlayerReporting/v1/voteToKickReasons	apps/api/src/routes/moderation.ts	402	not yet implemented	
+api	GET	/api/PlayerReporting/v1/moderationBlockDetails	apps/api/src/routes/moderation.ts	351	not yet implemented	
+api	POST	/api/PlayerReporting/v1/moderationBlockDetails	apps/api/src/routes/moderation.ts	351	not yet implemented	
+api	GET	/api/purchasableXpBoosts/activations	apps/api/src/routes/progression.ts	683	not yet implemented	
+api	GET	/api/progressionEvents/record/:id{[0-9]+}	apps/api/src/routes/progression.ts	644	not yet implemented	
+api	GET	/api/progressionEvents/event/:id{[0-9]+}	apps/api/src/routes/progression.ts	616	not yet implemented	
+api	GET	/api/progressionEvents/active	apps/api/src/routes/progression.ts	597	not yet implemented	
+api	POST	/api/v1/progression/bulk	apps/api/src/routes/progression.ts	572	not yet implemented	
+api	GET	/api/players/v2/progression/bulk	apps/api/src/routes/progression.ts	558	not yet implemented	
+api	POST	/api/players/v2/progression/bulk	apps/api/src/routes/progression.ts	542	not yet implemented	
+api	POST	/api/players/v1/progression/bulk	apps/api/src/routes/progression.ts	527	not yet implemented	
+api	POST	/api/PlayerCheer/v1/SetSelectedCheer	apps/api/src/routes/progression.ts	496	not yet implemented	
+api	POST	/api/PlayerCheer/v1/create	apps/api/src/routes/progression.ts	393	not yet implemented	
+api	GET	/api/playerReputation/v2/bulk	apps/api/src/routes/progression.ts	373	not yet implemented	
+api	POST	/api/playerReputation/v2/bulk	apps/api/src/routes/progression.ts	358	not yet implemented	
+api	POST	/api/playerReputation/v1/bulk	apps/api/src/routes/progression.ts	345	not yet implemented	
+api	GET	/api/players/v1/progression/:id	apps/api/src/routes/progression.ts	324	not yet implemented	
+api	GET	/api/players/v1/progression/xpEarnedToday	apps/api/src/routes/progression.ts	312	not yet implemented	
+api	GET	/api/playerReputation/v1/:id	apps/api/src/routes/progression.ts	286	not yet implemented	
+api	POST	/api/rooms/v1/verifyRole	apps/api/src/routes/rooms.ts	106	not yet implemented	
+api	GET	/api/rooms/v1/filters	apps/api/src/routes/rooms.ts	58	not yet implemented	
+api	GET	/api/quickPlay/v1/getandclear	apps/api/src/routes/rooms.ts	42	not yet implemented	
+api	GET	/api/roomkeys/v1/room	apps/api/src/routes/rooms.ts	32	not yet implemented	
+api	GET	/api/roomkeys/v1/mine	apps/api/src/routes/rooms.ts	22	not yet implemented	
+api	GET	/api/messages/v1/favoriteFriendOnlineStatus	apps/api/src/routes/social.ts	816	not yet implemented	
+api	POST	/api/messages/v1/friendOnlineStatus	apps/api/src/routes/social.ts	788	implemented but awaiting client verification	Covered by local HTTP smoke tests; lobby only, no room presence or push notifications
+api	POST	/api/messages/v3/delete	apps/api/src/routes/social.ts	741	implemented but awaiting client verification	Covered by local HTTP smoke tests
+api	GET	/api/messages/v2/get	apps/api/src/routes/social.ts	708	implemented but awaiting client verification	Covered by local HTTP smoke tests
+api	GET	/api/relationships/v1/unfavorite	apps/api/src/routes/social.ts	695	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	POST	/api/relationships/v1/unfavorite	apps/api/src/routes/social.ts	695	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	GET	/api/relationships/v1/favorite	apps/api/src/routes/social.ts	679	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	POST	/api/relationships/v1/favorite	apps/api/src/routes/social.ts	679	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	GET	/api/relationships/v1/unmute	apps/api/src/routes/social.ts	661	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	POST	/api/relationships/v1/unmute	apps/api/src/routes/social.ts	661	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	GET	/api/relationships/v1/mute	apps/api/src/routes/social.ts	645	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	POST	/api/relationships/v1/mute	apps/api/src/routes/social.ts	645	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	GET	/api/relationships/v1/unignore	apps/api/src/routes/social.ts	633	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	POST	/api/relationships/v1/unignore	apps/api/src/routes/social.ts	633	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	GET	/api/relationships/v1/ignore	apps/api/src/routes/social.ts	617	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	POST	/api/relationships/v1/ignore	apps/api/src/routes/social.ts	617	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	GET	/api/relationships/v2/addfriend	apps/api/src/routes/social.ts	592	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	POST	/api/relationships/v2/addfriend	apps/api/src/routes/social.ts	592	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	GET	/api/relationships/v2/removefriend	apps/api/src/routes/social.ts	572	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	POST	/api/relationships/v2/removefriend	apps/api/src/routes/social.ts	572	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	GET	/api/relationships/v2/acceptfriendrequest	apps/api/src/routes/social.ts	546	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	POST	/api/relationships/v2/acceptfriendrequest	apps/api/src/routes/social.ts	546	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	GET	/api/relationships/v2/sendfriendrequest	apps/api/src/routes/social.ts	513	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	POST	/api/relationships/v2/sendfriendrequest	apps/api/src/routes/social.ts	513	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	POST	/api/messages/v1/sendMultiple	apps/api/src/routes/social.ts	422	not yet implemented	
+api	POST	/api/messages/v2/send	apps/api/src/routes/social.ts	347	not yet implemented	
+api	GET	/api/relationships/mutualfriends	apps/api/src/routes/social.ts	296	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+api	GET	/api/relationships/v2/get	apps/api/src/routes/social.ts	270	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
+auth	GET	/oculus/nonce	apps/auth/src/auth.app.ts	2098	not yet implemented	
+auth	GET	/role/screenshare/:id	apps/auth/src/auth.app.ts	2088	not yet implemented	
+auth	GET	/role/moderator	apps/auth/src/auth.app.ts	2083	not yet implemented	
+auth	GET	/role/moderator/:id	apps/auth/src/auth.app.ts	2078	not yet implemented	
+auth	GET	/role/developer	apps/auth/src/auth.app.ts	2071	not yet implemented	
+auth	GET	/role/developer/:id	apps/auth/src/auth.app.ts	2063	not yet implemented	
+auth	GET	/privileges/me/restrictions	apps/auth/src/auth.app.ts	2033	not yet implemented	
+auth	POST	/account/resetpassword	apps/auth/src/auth.app.ts	1964	not yet implemented	
+auth	POST	/account/recoverpassword	apps/auth/src/auth.app.ts	1866	not yet implemented	
+auth	POST	/account/me/changepassword	apps/auth/src/auth.app.ts	1812	implemented but awaiting client verification	Password change invalidates access tokens, refresh tokens and Photon tickets. HTTP and Luxon regression tested.
+auth	POST	/connect/token	apps/auth/src/auth.app.ts	1063	partially implemented	Local signup, password login and atomic refresh rotation tested. Platform and Studio grants pending.
+auth	POST	/connect/device/deny	apps/auth/src/auth.app.ts	1044	not yet implemented	
+auth	POST	/connect/device/approve	apps/auth/src/auth.app.ts	1026	not yet implemented	
+auth	POST	/connect/deviceauthorization	apps/auth/src/auth.app.ts	989	not yet implemented	
+auth	POST	/cachedlogin/forplatformids	apps/auth/src/auth.app.ts	958	not yet implemented	
+auth	GET	/cachedlogin/forplatformid/:platform/:id	apps/auth/src/auth.app.ts	884	partially implemented	0.5 integration-tested. Unlinked local deployment returns an empty account picker. No platform identity verification or sideloaded Meta fallback.
+auth	POST	/cachedlogin/forplatformid/:platform/:id	apps/auth/src/auth.app.ts	884	partially implemented	0.5 integration-tested. Same behavior as GET. Does not create an identity link.
+auth	GET	/eac/challenge	apps/auth/src/auth.app.ts	857	not yet implemented	
+auth	GET	/openapi.json	apps/auth/src/auth.app.ts	2119	not yet implemented	
+cards	GET	/iam/me/channels/:channel	apps/cards/src/cards.app.ts	26	not yet implemented	
+cards	GET	/	apps/cards/src/cards.app.ts	23	not yet implemented	
+cdn	GET	/unityasset/:filename{.+}	apps/cdn/src/cdn.app.ts	439	not yet implemented	
+cdn	HEAD	/unityasset/:filename{.+}	apps/cdn/src/cdn.app.ts	419	not yet implemented	
+cdn	GET	/roomunityasset/:filename{.+}	apps/cdn/src/cdn.app.ts	398	implemented but awaiting client verification	
+cdn	GET	/avatarunityasset/:filename{.+}	apps/cdn/src/cdn.app.ts	392	not yet implemented	
+cdn	GET	/avatar/:asset{.+}	apps/cdn/src/cdn.app.ts	372	implemented but awaiting client verification	
+cdn	GET	/video/:name{.+}	apps/cdn/src/cdn.app.ts	350	not yet implemented	
+cdn	GET	/data/:id{.+}	apps/cdn/src/cdn.app.ts	327	implemented but awaiting client verification	
+cdn	GET	/invention/:dataBlob{.+}	apps/cdn/src/cdn.app.ts	303	implemented but awaiting client verification	
+cdn	GET	/room/:dataBlob{.+}	apps/cdn/src/cdn.app.ts	279	implemented but awaiting client verification	
+cdn	GET	/sigs/:sigName	apps/cdn/src/cdn.app.ts	260	implemented but awaiting client verification	
+cdn	GET	/config/:name	apps/cdn/src/cdn.app.ts	219	implemented but awaiting client verification	
+cdn	GET	/config/LoadingScreenTipData	apps/cdn/src/cdn.app.ts	198	implemented but awaiting client verification	
+cdn	GET	/	apps/cdn/src/cdn.app.ts	186	implemented but awaiting client verification	
+cdn	GET	/openapi.json	apps/cdn/src/cdn.app.ts	517	not yet implemented	
+chat	GET	/thread/:id{[0-9]+}/message	apps/chat/src/chat.app.ts	1515	not yet implemented	
+chat	PUT	/thread/:id{[0-9]+}/message/:messageId{[0-9]+}/read	apps/chat/src/chat.app.ts	1484	not yet implemented	
+chat	POST	/thread/:id{[0-9]+}/message/:messageId{[0-9]+}/read	apps/chat/src/chat.app.ts	1484	not yet implemented	
+chat	PUT	/thread/:id{[0-9]+}/read	apps/chat/src/chat.app.ts	1470	not yet implemented	
+chat	POST	/thread/:id{[0-9]+}/read	apps/chat/src/chat.app.ts	1470	not yet implemented	
+chat	POST	/thread/:id{[0-9]+}/member/:playerId{[0-9]+}	apps/chat/src/chat.app.ts	1413	not yet implemented	
+chat	PUT	/thread/:id{[0-9]+}/favorite	apps/chat/src/chat.app.ts	1368	not yet implemented	
+chat	POST	/thread/:id{[0-9]+}/favorite	apps/chat/src/chat.app.ts	1368	not yet implemented	
+chat	POST	/thread/:id{[0-9]+}/snooze	apps/chat/src/chat.app.ts	1335	not yet implemented	
+chat	PUT	/thread/:id{[0-9]+}/snooze	apps/chat/src/chat.app.ts	1335	not yet implemented	
+chat	POST	/thread/:id{[0-9]+}/leave	apps/chat/src/chat.app.ts	1294	not yet implemented	
+chat	DELETE	/thread/:id{[0-9]+}/leave	apps/chat/src/chat.app.ts	1294	not yet implemented	
+chat	POST	/thread/:id{[0-9]+}/rename	apps/chat/src/chat.app.ts	1261	not yet implemented	
+chat	PUT	/thread/:id{[0-9]+}/rename	apps/chat/src/chat.app.ts	1261	not yet implemented	
+chat	POST	/thread/:id{[0-9]+}/message	apps/chat/src/chat.app.ts	1254	not yet implemented	
+chat	POST	/thread/:id{[0-9]+}	apps/chat/src/chat.app.ts	1253	not yet implemented	
+chat	GET	/thread/:id{[0-9]+}	apps/chat/src/chat.app.ts	1215	not yet implemented	
+chat	POST	/thread/withmembers	apps/chat/src/chat.app.ts	1152	not yet implemented	
+chat	GET	/thread/checkCanSendDirectMessageWithPrivacySetting	apps/chat/src/chat.app.ts	1108	not yet implemented	
+chat	PUT	/thread/chatPrivacySetting	apps/chat/src/chat.app.ts	1058	not yet implemented	
+chat	GET	/thread/chatPrivacySetting	apps/chat/src/chat.app.ts	1021	not yet implemented	
+chat	POST	/thread/party	apps/chat/src/chat.app.ts	961	not yet implemented	
+chat	GET	/thread/party	apps/chat/src/chat.app.ts	853	not yet implemented	
+chat	GET	/settings/partyinvite	apps/chat/src/chat.app.ts	785	not yet implemented	
+chat	POST	/thread	apps/chat/src/chat.app.ts	714	not yet implemented	
+chat	GET	/thread	apps/chat/src/chat.app.ts	679	not yet implemented	
+chat	GET	/	apps/chat/src/chat.app.ts	664	not yet implemented	
+chat	GET	/openapi.json	apps/chat/src/chat.app.ts	1547	not yet implemented	
+clubs	POST	/club/:clubId{[0-9]+}/leave	apps/clubs/src/clubs.app.ts	1754	not yet implemented	
+clubs	POST	/club/:clubId{[0-9]+}/join	apps/clubs/src/clubs.app.ts	1726	not yet implemented	
+clubs	POST	/club/:clubId{[0-9]+}/members/leave	apps/clubs/src/clubs.app.ts	1677	not yet implemented	
+clubs	PUT	/club/:clubId{[0-9]+}/members/invite	apps/clubs/src/clubs.app.ts	1597	not yet implemented	
+clubs	PUT	/club/:clubId{[0-9]+}/members/requesttojoin	apps/clubs/src/clubs.app.ts	1544	not yet implemented	
+clubs	DELETE	/club/:clubId{[0-9]+}	apps/clubs/src/clubs.app.ts	1499	not yet implemented	
+clubs	GET	/club/:clubId{[0-9]+}	apps/clubs/src/clubs.app.ts	1476	not yet implemented	
+clubs	PUT	/club/:clubId{[0-9]+}/additionalimage/:index{[0-9]+}	apps/clubs/src/clubs.app.ts	1404	not yet implemented	
+clubs	DELETE	/club/:clubId{[0-9]+}/additionalimage/:index{[0-9]+}	apps/clubs/src/clubs.app.ts	1404	not yet implemented	
+clubs	PUT	/club/:clubId{[0-9]+}/mainimage	apps/clubs/src/clubs.app.ts	1346	not yet implemented	
+clubs	GET	/club/:clubId{[0-9]+}/mainimage	apps/clubs/src/clubs.app.ts	1318	not yet implemented	
+clubs	PUT	/club/:clubId{[0-9]+}/clubhouse	apps/clubs/src/clubs.app.ts	1253	not yet implemented	
+clubs	DELETE	/club/:clubId{[0-9]+}/clubhouse	apps/clubs/src/clubs.app.ts	1253	not yet implemented	
+clubs	PUT	/club/:clubId{[0-9]+}/minlevel	apps/clubs/src/clubs.app.ts	1192	not yet implemented	
+clubs	GET	/club/:clubId{[0-9]+}/members	apps/clubs/src/clubs.app.ts	1145	not yet implemented	
+clubs	GET	/club/:clubId{[0-9]+}/hasDisabledClubChat	apps/clubs/src/clubs.app.ts	1124	not yet implemented	
+clubs	GET	/club/:clubId{[0-9]+}/details	apps/clubs/src/clubs.app.ts	1093	not yet implemented	
+clubs	PUT	/club/:clubId{[0-9]+}/modifydetails	apps/clubs/src/clubs.app.ts	983	not yet implemented	
+clubs	PUT	/club/:clubId{[0-9]+}/modify	apps/clubs/src/clubs.app.ts	983	not yet implemented	
+clubs	POST	/club/create	apps/clubs/src/clubs.app.ts	887	not yet implemented	
+clubs	GET	/club/categoryTags	apps/clubs/src/clubs.app.ts	873	not yet implemented	
+clubs	GET	/club/search	apps/clubs/src/clubs.app.ts	817	not yet implemented	
+clubs	GET	/club/account/:accountId{[0-9]+}/created	apps/clubs/src/clubs.app.ts	780	not yet implemented	
+clubs	GET	/account/:accountId{[0-9]+}/clubs	apps/clubs/src/clubs.app.ts	749	not yet implemented	
+clubs	GET	/club/mine/created	apps/clubs/src/clubs.app.ts	729	not yet implemented	
+clubs	GET	/club/mine/member	apps/clubs/src/clubs.app.ts	706	not yet implemented	
+clubs	DELETE	/announcements/club/:clubId{[0-9]+}/:announcementId{[0-9]+}	apps/clubs/src/clubs.app.ts	652	not yet implemented	
+clubs	POST	/announcements/club/:clubId{[0-9]+}	apps/clubs/src/clubs.app.ts	604	not yet implemented	
+clubs	GET	/announcements/club/:clubId{[0-9]+}	apps/clubs/src/clubs.app.ts	572	not yet implemented	
+clubs	GET	/announcements/v2/subscription/mine/unread	apps/clubs/src/clubs.app.ts	545	not yet implemented	
+clubs	GET	/announcements/v2/mine/unread	apps/clubs/src/clubs.app.ts	527	not yet implemented	
+clubs	GET	/subscription/subscriberCount/:accountId{[0-9]+}	apps/clubs/src/clubs.app.ts	496	not yet implemented	
+clubs	POST	/subscription/:accountId{[0-9]+}	apps/clubs/src/clubs.app.ts	434	not yet implemented	
+clubs	GET	/subscription/details/:subscription	apps/clubs/src/clubs.app.ts	403	not yet implemented	
+clubs	GET	/subscription/details/:accountId{[0-9]+}	apps/clubs/src/clubs.app.ts	368	not yet implemented	
+clubs	GET	/subscription/mine/member	apps/clubs/src/clubs.app.ts	335	not yet implemented	
+clubs	DELETE	/club/home/me	apps/clubs/src/clubs.app.ts	304	not yet implemented	
+clubs	PUT	/club/home/me	apps/clubs/src/clubs.app.ts	252	not yet implemented	
+clubs	GET	/club/home/me	apps/clubs/src/clubs.app.ts	224	not yet implemented	
+clubs	GET	/openapi.json	apps/clubs/src/clubs.app.ts	1794	not yet implemented	
+commerce	GET	/reminder/currentTokenBundles/v2	apps/commerce/src/commerce.app.ts	167	not yet implemented	
+commerce	GET	/purchasecampaign/allcurrent/v2	apps/commerce/src/commerce.app.ts	151	not yet implemented	
+commerce	GET	/purchase/v1/cleanuppending	apps/commerce/src/commerce.app.ts	133	not yet implemented	
+commerce	POST	/purchase/v1/cleanuppending	apps/commerce/src/commerce.app.ts	133	not yet implemented	
+commerce	GET	/api/catalog/v1/all	apps/commerce/src/commerce.app.ts	111	not yet implemented	
+commerce	POST	/purchase/v1/initiatepurchase	apps/commerce/src/commerce.app.ts	90	not yet implemented	
+commerce	GET	/purchaseRestriction/isplayerrestricted	apps/commerce/src/commerce.app.ts	75	not yet implemented	
+commerce	GET	/purchase/v1/hasspentmoney	apps/commerce/src/commerce.app.ts	61	not yet implemented	
+commerce	GET	/	apps/commerce/src/commerce.app.ts	48	not yet implemented	
+commerce	GET	/openapi.json	apps/commerce/src/commerce.app.ts	183	not yet implemented	
+datacollection	GET	/sampling	apps/datacollection/src/datacollection.app.ts	56	not yet implemented	Excluded by the no-telemetry requirement
+datacollection	POST	/data/events	apps/datacollection/src/datacollection.app.ts	47	not yet implemented	Excluded by the no-telemetry requirement
+datacollection	POST	/data/event	apps/datacollection/src/datacollection.app.ts	38	not yet implemented	Excluded by the no-telemetry requirement
+datacollection	GET	/	apps/datacollection/src/datacollection.app.ts	31	not yet implemented	Excluded by the no-telemetry requirement
+discovery	GET	/sections/pagesource/:type	apps/discovery/src/discovery.app.ts	106	not yet implemented	
+discovery	GET	/sections/bulk	apps/discovery/src/discovery.app.ts	66	not yet implemented	
+discovery	GET	/	apps/discovery/src/discovery.app.ts	43	not yet implemented	
+discovery	GET	/openapi.json	apps/discovery/src/discovery.app.ts	144	not yet implemented	
+econ	POST	/api/influencerpartnerprogram/remove	apps/econ/src/econ.app.ts	7870	not yet implemented	
+econ	POST	/api/influencerpartnerprogram/support	apps/econ/src/econ.app.ts	7826	not yet implemented	
+econ	GET	/api/influencerpartnerprogram/myinfluencer	apps/econ/src/econ.app.ts	7797	not yet implemented	
+econ	GET	/api/influencerpartnerprogram/influencer	apps/econ/src/econ.app.ts	7756	not yet implemented	
+econ	GET	/api/influencerpartnerprogram/influencers	apps/econ/src/econ.app.ts	7716	not yet implemented	
+econ	GET	/api/incentivizedreferrals/progress	apps/econ/src/econ.app.ts	7680	not yet implemented	
+econ	GET	/api/makerai/checkfreetrialeligibility	apps/econ/src/econ.app.ts	7649	not yet implemented	
+econ	GET	/api/subscriptionseasons/v1/seasons/current	apps/econ/src/econ.app.ts	7605	not yet implemented	
+econ	POST	/api/CampusCard/v1/UpdateAndGetSubscription	apps/econ/src/econ.app.ts	7572	not yet implemented	
+econ	GET	/api/CampusCard/v1/SignUpBonus	apps/econ/src/econ.app.ts	7541	not yet implemented	
+econ	POST	/api/roomkeys/v1/owns/bulk	apps/econ/src/econ.app.ts	7491	not yet implemented	
+econ	POST	/api/roomkeys/v1/awardbulk	apps/econ/src/econ.app.ts	7415	not yet implemented	
+econ	PUT	/api/roomkeys/v1/updateAll	apps/econ/src/econ.app.ts	7300	not yet implemented	
+econ	POST	/api/storefronts/v1/PurchaseRoomKeyWithCurrency	apps/econ/src/econ.app.ts	7197	not yet implemented	
+econ	GET	/api/storefronts/v1/buyRoomKey	apps/econ/src/econ.app.ts	7067	not yet implemented	
+econ	POST	/api/roomkeys/v1/create	apps/econ/src/econ.app.ts	6962	not yet implemented	
+econ	GET	/api/roomkeys/v1/room	apps/econ/src/econ.app.ts	6931	not yet implemented	
+econ	GET	/api/roomkeys/v1/mine	apps/econ/src/econ.app.ts	6903	not yet implemented	
+econ	POST	/api/gamerewards/v1/request	apps/econ/src/econ.app.ts	6753	not yet implemented	
+econ	GET	/api/gamerewards/v1/pending	apps/econ/src/econ.app.ts	6716	not yet implemented	
+econ	POST	/api/challenge/v2/updateProgress	apps/econ/src/econ.app.ts	6655	not yet implemented	
+econ	GET	/api/challenge/v2/getCurrent	apps/econ/src/econ.app.ts	6606	not yet implemented	
+econ	GET	/api/storefronts/v1/adcarouselitems	apps/econ/src/econ.app.ts	6589	not yet implemented	
+econ	POST	/api/storefronts/v3/buyInvention	apps/econ/src/econ.app.ts	6498	not yet implemented	
+econ	GET	/api/storefronts/v2/buyInvention	apps/econ/src/econ.app.ts	6419	not yet implemented	
+econ	POST	/api/items/bulkpurchase	apps/econ/src/econ.app.ts	6103	not yet implemented	
+econ	POST	/api/storefronts/v2/buyItem	apps/econ/src/econ.app.ts	5940	not yet implemented	
+econ	GET	/api/storefronts/v3/giftdropstore/:id	apps/econ/src/econ.app.ts	5888	not yet implemented	
+econ	GET	/api/storefronts/v4/balance/:currencyType	apps/econ/src/econ.app.ts	5840	not yet implemented	
+econ	POST	/api/consumables/v1/updateActive	apps/econ/src/econ.app.ts	5796	not yet implemented	
+econ	POST	/api/consumables/v1/consume	apps/econ/src/econ.app.ts	5751	not yet implemented	
+econ	GET	/api/consumables/v2/getUnlocked	apps/econ/src/econ.app.ts	5714	not yet implemented	
+econ	POST	/api/consumables/v1/query/bulk	apps/econ/src/econ.app.ts	5690	not yet implemented	
+econ	GET	/api/consumables/v1/all	apps/econ/src/econ.app.ts	5671	not yet implemented	
+econ	POST	/api/storefronts/v1/purchasableitems	apps/econ/src/econ.app.ts	5634	not yet implemented	
+econ	POST	/api/items/purchaseInfos	apps/econ/src/econ.app.ts	5590	not yet implemented	
+econ	POST	/api/ugcPurchasables/v1/items/bulk	apps/econ/src/econ.app.ts	5543	not yet implemented	
+econ	GET	/api/ugcPurchasables/v1/items/room/:roomId{[0-9]+}	apps/econ/src/econ.app.ts	5512	not yet implemented	
+econ	POST	/api/distanceMovedRewardTracks/distance	apps/econ/src/econ.app.ts	5496	not yet implemented	
+econ	POST	/api/timedCurrencyGrants/update	apps/econ/src/econ.app.ts	5472	not yet implemented	
+econ	GET	/paintball-battle-pass/config	apps/econ/src/econ.app.ts	5438	not yet implemented	
+econ	GET	/econ/roomEconConfig/:roomId	apps/econ/src/econ.app.ts	5411	not yet implemented	
+econ	GET	/econ/roomGiftDropShops/room/:roomId	apps/econ/src/econ.app.ts	5400	not yet implemented	
+econ	GET	/econ/roomOffer/room/:roomId/recentPurchases	apps/econ/src/econ.app.ts	5378	not yet implemented	
+econ	GET	/econ/roomOffer/room/:roomId/purchaseCounts	apps/econ/src/econ.app.ts	5349	not yet implemented	
+econ	GET	/econ/roomOffer/room/:roomId	apps/econ/src/econ.app.ts	5346	not yet implemented	
+econ	GET	/econ/roomInventoryItemTags/room/:roomId	apps/econ/src/econ.app.ts	5341	not yet implemented	
+econ	GET	/econ/roomInventory/room/:roomId/player	apps/econ/src/econ.app.ts	5336	not yet implemented	
+econ	GET	/econ/roomInventory/room/:roomId	apps/econ/src/econ.app.ts	5331	not yet implemented	
+econ	POST	/api/roomCurrencies/v2/purchase	apps/econ/src/econ.app.ts	5186	not yet implemented	
+econ	GET	/api/roomcurrencies/v1/getBalance	apps/econ/src/econ.app.ts	5132	not yet implemented	
+econ	GET	/api/roomcurrencies/v1/getAllBalances	apps/econ/src/econ.app.ts	5126	not yet implemented	
+econ	POST	/api/roomcurrencies/v1/createPurchaseOffer	apps/econ/src/econ.app.ts	5041	not yet implemented	
+econ	GET	/api/roomcurrencies/v1/getPurchaseOffersBatch	apps/econ/src/econ.app.ts	4986	not yet implemented	
+econ	POST	/api/roomcurrencies/v1/awardCurrency/bulk	apps/econ/src/econ.app.ts	4856	not yet implemented	
+econ	POST	/api/roomcurrencies/v1/deletePurchaseOffer	apps/econ/src/econ.app.ts	4800	not yet implemented	
+econ	POST	/api/roomcurrencies/v1/createPurchaseOffer	apps/econ/src/econ.app.ts	4710	not yet implemented	
+econ	GET	/api/roomcurrencies/v1/getPurchaseOffersBatch	apps/econ/src/econ.app.ts	4654	not yet implemented	
+econ	POST	/api/roomcurrencies/v1/updateCurrency	apps/econ/src/econ.app.ts	4560	not yet implemented	
+econ	POST	/api/roomcurrencies/v1/createCurrency	apps/econ/src/econ.app.ts	4478	not yet implemented	
+econ	GET	/api/roomcurrencies/v1/currencies	apps/econ/src/econ.app.ts	4441	not yet implemented	
+econ	PUT	/api/roomconsumables/v1/roomConsumable/:id/consume	apps/econ/src/econ.app.ts	4381	not yet implemented	
+econ	GET	/api/roomconsumables/v1/roomConsumable/room/:roomId/me	apps/econ/src/econ.app.ts	4338	not yet implemented	
+econ	PUT	/api/roomconsumables/v1/roomConsumable	apps/econ/src/econ.app.ts	4225	not yet implemented	
+econ	PUT	/api/roomconsumables/v1/roomconsumable/:id/purchase/:via{currency|tokens}	apps/econ/src/econ.app.ts	4031	not yet implemented	
+econ	POST	/api/roomconsumables/v1/roomConsumable/awardBulk	apps/econ/src/econ.app.ts	3924	not yet implemented	
+econ	GET	/api/roomconsumables/v1/roomConsumable/room/:roomId	apps/econ/src/econ.app.ts	3885	not yet implemented	
+econ	PUT	/api/equipment/v1/update	apps/econ/src/econ.app.ts	3846	not yet implemented	
+econ	POST	/api/equipment/v1/update	apps/econ/src/econ.app.ts	3846	not yet implemented	
+econ	GET	/api/equipment/v2/getUnlocked	apps/econ/src/econ.app.ts	3827	not yet implemented	
+econ	GET	/api/avatar/v2/:id	apps/econ/src/econ.app.ts	3794	not yet implemented	
+econ	POST	/api/avatar/v2/gifts/consume	apps/econ/src/econ.app.ts	3748	not yet implemented	
+econ	GET	/api/avatar/v2/gifts	apps/econ/src/econ.app.ts	3713	not yet implemented	
+econ	POST	/api/avatar/v4/saved/set	apps/econ/src/econ.app.ts	3684	not yet implemented	
+econ	POST	/api/avatar/v3/saved/set	apps/econ/src/econ.app.ts	3654	not yet implemented	
+econ	GET	/api/avatar/v3/saved	apps/econ/src/econ.app.ts	3622	not yet implemented	
+econ	POST	/api/itemWishlists/v1/isonwishlist/bulk	apps/econ/src/econ.app.ts	3578	not yet implemented	
+econ	POST	/api/itemWishlists/v1/wishlist/remove	apps/econ/src/econ.app.ts	3546	not yet implemented	
+econ	POST	/api/itemWishlists/v1/wishlist/add	apps/econ/src/econ.app.ts	3509	not yet implemented	
+econ	GET	/api/itemWishlists/v1/wishlist/:accountId{[0-9]+}	apps/econ/src/econ.app.ts	3464	not yet implemented	
+econ	GET	/api/itemWishlists/v1/wishlist/me	apps/econ/src/econ.app.ts	3430	not yet implemented	
+econ	POST	/api/checklist/v1/complete	apps/econ/src/econ.app.ts	3392	not yet implemented	
+econ	POST	/api/checklist/v2/complete	apps/econ/src/econ.app.ts	3392	not yet implemented	
+econ	GET	/api/checklist/v1/current	apps/econ/src/econ.app.ts	3363	not yet implemented	
+econ	GET	/api/checklist/v2/current	apps/econ/src/econ.app.ts	3363	not yet implemented	
+econ	POST	/api/avatar/v2/set	apps/econ/src/econ.app.ts	3332	not yet implemented	
+econ	GET	/api/avatar/v2	apps/econ/src/econ.app.ts	3307	not yet implemented	
+econ	POST	/api/objectives/v1/updateobjective	apps/econ/src/econ.app.ts	3279	not yet implemented	
+econ	GET	/api/objectives/v1/cleargroup	apps/econ/src/econ.app.ts	3261	not yet implemented	
+econ	POST	/api/objectives/v1/cleargroup	apps/econ/src/econ.app.ts	3261	not yet implemented	
+econ	GET	/api/objectives/v1/myprogress	apps/econ/src/econ.app.ts	3246	not yet implemented	
+econ	GET	/econ/customAvatarItems/v1/owned	apps/econ/src/econ.app.ts	3208	not yet implemented	
+econ	POST	/circuitsRoomRewards/grantRoomBadge	apps/econ/src/econ.app.ts	3131	not yet implemented	
+econ	GET	/econ/customAvatarItems/v1/ownedby/:accountId{[0-9]+}	apps/econ/src/econ.app.ts	3110	not yet implemented	
+econ	GET	/api/avatar/v4/items	apps/econ/src/econ.app.ts	3085	not yet implemented	
+econ	GET	/api/avatar/v1/defaultbaseavataritems	apps/econ/src/econ.app.ts	3076	not yet implemented	
+econ	GET	/api/avatar/v1/defaultunlocked	apps/econ/src/econ.app.ts	3068	not yet implemented	
+econ	POST	/api/avatar/v1/lockeditems/bulk	apps/econ/src/econ.app.ts	3021	not yet implemented	
+econ	GET	/openapi.json	apps/econ/src/econ.app.ts	7906	not yet implemented	
+img	GET	/	apps/img/src/img.app.ts	342	not yet implemented	
+img	GET	/openapi.json	apps/img/src/img.app.ts	361	not yet implemented	
+img	GET	/:key{.+}	apps/img/src/img.app.ts	400	not yet implemented	
+leaderboard	POST	/leaderboard/CheckAndSetStat	apps/leaderboard/src/leaderboard.app.ts	308	not yet implemented	
+leaderboard	POST	/leaderboard/GetPlayerRank	apps/leaderboard/src/leaderboard.app.ts	258	not yet implemented	
+leaderboard	POST	/leaderboard/GetRanks	apps/leaderboard/src/leaderboard.app.ts	209	not yet implemented	
+leaderboard	POST	/leaderboard/GetNearbyScores	apps/leaderboard/src/leaderboard.app.ts	162	not yet implemented	
+leaderboard	GET	/	apps/leaderboard/src/leaderboard.app.ts	132	not yet implemented	
+leaderboard	GET	/openapi.json	apps/leaderboard/src/leaderboard.app.ts	367	not yet implemented	
+link	POST	/actionlink	apps/link/src/link.app.ts	50	not yet implemented	
+link	GET	/	apps/link/src/link.app.ts	39	not yet implemented	
+lists	POST	/contextualfeatures	apps/lists/src/lists.app.ts	1004	not yet implemented	
+lists	GET	/algorithmiclists/:list	apps/lists/src/lists.app.ts	875	not yet implemented	
+lists	DELETE	/curatedlists/:listId/items/:itemId	apps/lists/src/lists.app.ts	821	not yet implemented	
+lists	PUT	/curatedlists/:name/items/:itemId/createlistifneeded	apps/lists/src/lists.app.ts	758	not yet implemented	
+lists	GET	/curatedlists	apps/lists/src/lists.app.ts	689	not yet implemented	
+lists	GET	/curatedlists/bulk	apps/lists/src/lists.app.ts	632	not yet implemented	
+lists	GET	/	apps/lists/src/lists.app.ts	609	not yet implemented	
+lists	GET	/openapi.json	apps/lists/src/lists.app.ts	1032	not yet implemented	
+match	GET	/rooms/requiring/rrplus	apps/match/src/match.app.ts	3890	not yet implemented	
+match	GET	/rooms/requiring/developer	apps/match/src/match.app.ts	3878	not yet implemented	
+match	GET	/room/:roomId{[0-9]+}/instances	apps/match/src/match.app.ts	3834	implemented but awaiting client verification	0.4 local integration tested. Authorized manager listing of occupied instances.
+match	POST	/room/:roomId{[0-9]+}/instances/clear	apps/match/src/match.app.ts	3756	not yet implemented	
+match	POST	/roominstance/:id/markprivate	apps/match/src/match.app.ts	3707	implemented but awaiting client verification	Only room managers can close instance to automatic public allocation. Existing occupants and reservations remain valid.
+match	PUT	/roominstance/:id/matchpolicy	apps/match/src/match.app.ts	3657	implemented but awaiting client verification	Authenticated members can set Default, Avoid or Ignore. Automatic allocation respects the policy. Direct already-authorized joins still work.
+match	PUT	/roominstance/:id/inprogress	apps/match/src/match.app.ts	3615	partially implemented	0.4 local integration tested. Active members update round state; prevents ordinary public reuse.
+match	POST	/roominstance/:id/reportjoinresult	apps/match/src/match.app.ts	3598	partially implemented	0.4 local integration tested. Reference protocol acknowledgement; no gameplay evidence.
+match	POST	/invite	apps/match/src/match.app.ts	3523	partially implemented	0.4 local integration tested. Persistent expiring live-instance invitation and SignalR delivery for 2023.
+match	PUT	/player/gameserverregionpings	apps/match/src/match.app.ts	3501	not yet implemented	
+match	PUT	/player/photonregionpings	apps/match/src/match.app.ts	3491	not yet implemented	
+match	GET	/player/qos	apps/match/src/match.app.ts	3474	not yet implemented	
+match	GET	/player/connection-info	apps/match/src/match.app.ts	3364	partially implemented	Scoped 15-minute Realtime JWT with revocation generations, no-store. Luxon handoffs and admission protocol tested. Native ticket binding and Voice pending.
+match	POST	/matchmake/dorm	apps/match/src/match.app.ts	3325	partially implemented	0.4 local integration tested. Private provisioned dorm allocation.
+match	POST	/matchmake/none	apps/match/src/match.app.ts	3291	partially implemented	0.5 integration-tested. Startup preserves Orientation sentinel -2 until a normal room join. Existing accounts fall back to their dorm when offline.
+match	POST	/matchmake/v2/room/:roomId	apps/match/src/match.app.ts	3263	not yet implemented	
+match	POST	/matchmake/v2/room/:roomId/:subRoomId{[0-9]+}	apps/match/src/match.app.ts	3231	not yet implemented	
+match	POST	/matchmake/room/:roomId	apps/match/src/match.app.ts	3191	partially implemented	Transactional 2023 allocation, single default subroom per room and repeated AdditionalPlayerIds. Bounded party invites use the legacy SignalR message and require RecNet join before Photon admission.
+match	POST	/matchmake/room/:roomId/:subRoomId{[0-9]+}	apps/match/src/match.app.ts	3157	partially implemented	Transactional 2023 allocation, single default subroom per room and repeated AdditionalPlayerIds. Bounded party invites use the legacy SignalR message and require RecNet join before Photon admission.
+match	POST	/matchmake/instance/:instanceId{[0-9]+}	apps/match/src/match.app.ts	3056	partially implemented	0.4 local integration tested. Manager or valid invitee; occupied instance capacity enforced.
+match	POST	/matchmake/invite/:inviteId{[0-9]+}	apps/match/src/match.app.ts	2916	not yet implemented	
+match	POST	/matchmake/v2/player/:playerId{[0-9]+}	apps/match/src/match.app.ts	2755	not yet implemented	
+match	POST	/matchmake/player/:playerId{[0-9]+}	apps/match/src/match.app.ts	2634	partially implemented	0.4 local integration tested. Authorized follow or valid invite; current presence and capacity enforced.
+match	POST	/matchmake/event/:eventId{[0-9]+}	apps/match/src/match.app.ts	2543	not yet implemented	
+match	POST	/matchmake/club/:clubId{[0-9]+}	apps/match/src/match.app.ts	2483	not yet implemented	
+match	PUT	/player/avoidjuniors	apps/match/src/match.app.ts	2440	not yet implemented	
+match	GET	/player/avoidjuniors	apps/match/src/match.app.ts	2413	not yet implemented	
+match	PUT	/player/vrmovementmode	apps/match/src/match.app.ts	2369	not yet implemented	
+match	PUT	/player/statusvisibility	apps/match/src/match.app.ts	2322	not yet implemented	
+match	POST	/player/heartbeat	apps/match/src/match.app.ts	2250	implemented but awaiting client verification	0.5 integration-tested. Live lobby, Orientation and room presence with refresh and stale-lock rejection.
+match	POST	/player	apps/match/src/match.app.ts	2248	partially implemented	0.4 local integration tested. Bounded batch form location lookup with mutual-friend privacy.
+match	GET	/player	apps/match/src/match.app.ts	2244	partially implemented	0.4 local integration tested. Authenticated location lookup with mutual-friend privacy.
+match	GET	/clubhousesearch/mostactivenow	apps/match/src/match.app.ts	2221	not yet implemented	
+match	GET	/tachyon	apps/match/src/match.app.ts	2176	not yet implemented	
+match	POST	/player/notifydisconnect	apps/match/src/match.app.ts	2134	not yet implemented	
+match	POST	/player/logout	apps/match/src/match.app.ts	2095	implemented but awaiting client verification	Clears presence and reservations and revokes previously issued Photon tickets. Orientation and stale supplied LoginLock keep existing behavior.
+match	POST	/player/verifylock	apps/match/src/match.app.ts	2071	partially implemented	Checks current authenticated lobby lock, returns 409 for stale/missing lock; 0.6 HTTP tested.
+match	POST	/player/exclusivelogin	apps/match/src/match.app.ts	2054	partially implemented	Authenticated lobby lock acquisition; 0.6 HTTP tested.
+match	POST	/player/login	apps/match/src/match.app.ts	2012	implemented but awaiting client verification	0.4 local integration tested. Lobby login lock with room location retained.
+match	GET	/openapi.json	apps/match/src/match.app.ts	3951	not yet implemented	
+moderation	GET	/voice/config	apps/moderation/src/moderation.app.ts	34	implemented but awaiting client verification	
+moderation	GET	/	apps/moderation/src/moderation.app.ts	22	implemented but awaiting client verification	
+notify	DELETE	/internal/hub-state/pending	apps/notify/src/notify.app.ts	353	not yet implemented	
+notify	GET	/internal/hub-state	apps/notify/src/notify.app.ts	346	not yet implemented	
+notify	POST	/internal/coach-message	apps/notify/src/notify.app.ts	323	not yet implemented	
+notify	POST	/internal/coach-message-all	apps/notify/src/notify.app.ts	308	not yet implemented	
+notify	POST	/internal/broadcast	apps/notify/src/notify.app.ts	295	not yet implemented	
+notify	POST	/internal/notify	apps/notify/src/notify.app.ts	279	not yet implemented	
+notify	GET	/hub/v1	apps/notify/src/notify.app.ts	248	partially implemented	0.4 local integration tested. Authenticated SignalR JSON handshake, ping, room/invite/friend pushes; no generic subscriptions or offline hub queue. 0.8 supports a handshake and subsequent SignalR records in the same WebSocket message; reconnect tested.
+notify	POST	/hub/v1/negotiate	apps/notify/src/notify.app.ts	234	implemented but awaiting client verification	0.4 local integration tested. Stateless WebSocket negotiation.
+ns	GET	/	apps/ns/src/ns.app.ts	32	implemented but awaiting client verification	
+platformnotifications	GET	/preferences	apps/platformnotifications/src/platformnotifications.app.ts	150	not yet implemented	
+platformnotifications	GET	/crm/me/config/v3	apps/platformnotifications/src/platformnotifications.app.ts	120	not yet implemented	
+platformnotifications	GET	/config/categories	apps/platformnotifications/src/platformnotifications.app.ts	92	not yet implemented	
+platformnotifications	GET	/accounts/:id{[0-9]+}/receives/GameplayInvites	apps/platformnotifications/src/platformnotifications.app.ts	69	not yet implemented	
+platformnotifications	GET	/	apps/platformnotifications/src/platformnotifications.app.ts	57	not yet implemented	
+playersettings	DELETE	/playersettings	apps/playersettings/src/playersettings.app.ts	228	implemented but awaiting client verification	
+playersettings	PUT	/playersettings	apps/playersettings/src/playersettings.app.ts	188	implemented but awaiting client verification	
+playersettings	GET	/playersettings	apps/playersettings/src/playersettings.app.ts	151	implemented but awaiting client verification	
+playersettings	GET	/	apps/playersettings/src/playersettings.app.ts	138	implemented but awaiting client verification	
+playersettings	GET	/openapi.json	apps/playersettings/src/playersettings.app.ts	280	not yet implemented	
+roomcomments	POST	/comments/create/:roomId	apps/roomcomments/src/roomcomments.app.ts	155	not yet implemented	
+roomcomments	GET	/comments/get/:roomId	apps/roomcomments/src/roomcomments.app.ts	92	not yet implemented	
+roomcomments	GET	/	apps/roomcomments/src/roomcomments.app.ts	80	not yet implemented	
+roomcomments	GET	/openapi.json	apps/roomcomments/src/roomcomments.app.ts	222	not yet implemented	
+rooms	GET	/photon_access_token	apps/rooms/src/rooms.app.ts	5531	partially implemented	0.4 local integration tested. Role-specific default permissions; empty token as upstream; no subroom overrides.
+rooms	POST	/unity_assets/baked/bulk	apps/rooms/src/rooms.app.ts	5484	not yet implemented	
+rooms	GET	/publishState/configs	apps/rooms/src/rooms.app.ts	5447	not yet implemented	
+rooms	GET	/rooms/:roomId{[0-9]+}	apps/rooms/src/rooms.app.ts	5408	partially implemented	0.4 local integration tested. Persistent room and scene metadata. No save bundles or staff visibility.
+rooms	POST	/rooms/:roomId{[0-9]+}/experience/player	apps/rooms/src/rooms.app.ts	5349	not yet implemented	
+rooms	GET	/rooms/:roomId{[0-9]+}/experience/player	apps/rooms/src/rooms.app.ts	5308	not yet implemented	
+rooms	POST	/rooms/:roomId{[0-9]+}/experience	apps/rooms/src/rooms.app.ts	5256	not yet implemented	
+rooms	GET	/rooms/:roomId{[0-9]+}/experience	apps/rooms/src/rooms.app.ts	5226	not yet implemented	
+rooms	PUT	/rooms/:roomId{[0-9]+}/playerdata/me	apps/rooms/src/rooms.app.ts	5184	not yet implemented	
+rooms	GET	/rooms/:roomId{[0-9]+}/playerdata/me	apps/rooms/src/rooms.app.ts	5154	not yet implemented	
+rooms	GET	/rooms/:roomId{[0-9]+}/similar	apps/rooms/src/rooms.app.ts	5128	not yet implemented	
+rooms	DELETE	/rooms/:roomId{[0-9]+}/subrooms/:subRoomId{[0-9]+}	apps/rooms/src/rooms.app.ts	5076	not yet implemented	
+rooms	POST	/rooms/:roomId{[0-9]+}/subrooms	apps/rooms/src/rooms.app.ts	5024	not yet implemented	
+rooms	POST	/rooms/:roomId{[0-9]+}/subrooms/:subRoomId{[0-9]+}/move	apps/rooms/src/rooms.app.ts	4953	not yet implemented	
+rooms	POST	/rooms/:roomId{[0-9]+}/subrooms/:subRoomId{[0-9]+}/clone	apps/rooms/src/rooms.app.ts	4905	not yet implemented	
+rooms	PUT	/rooms/:roomId{[0-9]+}/subrooms/:subRoomId{[0-9]+}/permissions	apps/rooms/src/rooms.app.ts	4833	not yet implemented	
+rooms	PUT	/rooms/:roomId{[0-9]+}/subrooms/:subRoomId{[0-9]+}/accessibility	apps/rooms/src/rooms.app.ts	4764	not yet implemented	
+rooms	POST	/rooms/:roomId{[0-9]+}/subrooms/:subRoomId{[0-9]+}/publish_save	apps/rooms/src/rooms.app.ts	4692	not yet implemented	
+rooms	PUT	/rooms/:roomId{[0-9]+}/subrooms/:subRoomId{[0-9]+}/modify	apps/rooms/src/rooms.app.ts	4602	not yet implemented	
+rooms	POST	/rooms/:roomId{[0-9]+}/subrooms/:subRoomId{[0-9]+}/data	apps/rooms/src/rooms.app.ts	4476	not yet implemented	
+rooms	GET	/rooms/:roomId{[0-9]+}/subrooms/:subRoomId{[0-9]+}/unityasset	apps/rooms/src/rooms.app.ts	4394	not yet implemented	
+rooms	GET	/rooms/:roomId{[0-9]+}/subrooms/:subRoomId{[0-9]+}/saves/:saveId{[0-9]+}	apps/rooms/src/rooms.app.ts	4324	not yet implemented	
+rooms	GET	/rooms/:roomId{[0-9]+}/subrooms/:subRoomId{[0-9]+}/saves/no_unity_assets	apps/rooms/src/rooms.app.ts	4254	not yet implemented	
+rooms	GET	/rooms/:roomId{[0-9]+}/subrooms/:subRoomId{[0-9]+}/saves	apps/rooms/src/rooms.app.ts	4177	not yet implemented	
+rooms	PUT	/rooms/:roomId{[0-9]+}/exclude	apps/rooms/src/rooms.app.ts	4094	not yet implemented	
+rooms	PUT	/rooms/:roomId{[0-9]+}/accessibility	apps/rooms/src/rooms.app.ts	4006	partially implemented	0.4 local integration tested. Owner/co-owner change and RoomUpdate push; no staff override.
+rooms	PUT	/rooms/:roomId{[0-9]+}/loadscreen	apps/rooms/src/rooms.app.ts	3956	not yet implemented	
+rooms	PUT	/rooms/:roomId{[0-9]+}/restrictions	apps/rooms/src/rooms.app.ts	3884	not yet implemented	
+rooms	PUT	/rooms/:roomId{[0-9]+}/v2/restrictions	apps/rooms/src/rooms.app.ts	3884	not yet implemented	
+rooms	PUT	/rooms/:roomId{[0-9]+}/max_player_calculation_mode	apps/rooms/src/rooms.app.ts	3832	not yet implemented	
+rooms	PUT	/rooms/:roomId{[0-9]+}/cloning	apps/rooms/src/rooms.app.ts	3785	not yet implemented	
+rooms	PUT	/rooms/:roomId{[0-9]+}/warning	apps/rooms/src/rooms.app.ts	3735	not yet implemented	
+rooms	DELETE	/rooms/:roomId{[0-9]+}/leaderboards/:leaderboardId{[0-9]+}	apps/rooms/src/rooms.app.ts	3684	not yet implemented	
+rooms	POST	/rooms/:roomId{[0-9]+}/leaderboards/:leaderboardId{[0-9]+}	apps/rooms/src/rooms.app.ts	3613	not yet implemented	
+rooms	DELETE	/rooms/:roomId{[0-9]+}/bans/:playerId{[0-9]+}	apps/rooms/src/rooms.app.ts	3569	not yet implemented	
+rooms	DELETE	/rooms/:roomId{[0-9]+}/bans/bulk	apps/rooms/src/rooms.app.ts	3498	not yet implemented	
+rooms	GET	/rooms/:roomId{[0-9]+}/bans/:playerId{[0-9]+}/isBanned	apps/rooms/src/rooms.app.ts	3461	not yet implemented	
+rooms	GET	/Room_server/rooms/:roomId{[0-9]+}/bans/:playerId{[0-9]+}/isBanned	apps/rooms/src/rooms.app.ts	3410	not yet implemented	
+rooms	POST	/rooms/:roomId{[0-9]+}/bans	apps/rooms/src/rooms.app.ts	3290	not yet implemented	
+rooms	GET	/rooms/:roomId{[0-9]+}/bans/history	apps/rooms/src/rooms.app.ts	3206	not yet implemented	
+rooms	GET	/rooms/:roomId{[0-9]+}/bans	apps/rooms/src/rooms.app.ts	3150	not yet implemented	
+rooms	PUT	/rooms/:roomId{[0-9]+}/roles/:accountId{[0-9]+}/invite	apps/rooms/src/rooms.app.ts	3084	partially implemented	0.4 local integration tested. Persistent role offer and inbox message; live notification.
+rooms	PUT	/rooms/:roomId{[0-9]+}/creator	apps/rooms/src/rooms.app.ts	3014	partially implemented	0.4 local integration tested. Owner transfer and former-owner co-ownership.
+rooms	PUT	/rooms/:roomId{[0-9]+}/roles/:accountId{[0-9]+}	apps/rooms/src/rooms.app.ts	2887	partially implemented	0.4 local integration tested. Role grants, revocation and invite acceptance; local accounts.
+rooms	GET	/rooms/:roomId{[0-9]+}/roles	apps/rooms/src/rooms.app.ts	2841	partially implemented	0.4 local integration tested. Confirmed roles from SQLite.
+rooms	DELETE	/rooms/:roomId{[0-9]+}	apps/rooms/src/rooms.app.ts	2756	partially implemented	0.4 local integration tested. Owner deletion with cascading instance cleanup; no staff or uploaded-image handling.
+rooms	PUT	/rooms/:roomId{[0-9]+}/image	apps/rooms/src/rooms.app.ts	2685	not yet implemented	
+rooms	PUT	/rooms/:roomId{[0-9]+}/tags	apps/rooms/src/rooms.app.ts	2597	not yet implemented	
+rooms	PUT	/rooms/:roomId{[0-9]+}/name	apps/rooms/src/rooms.app.ts	2502	partially implemented	0.4 local integration tested. Owner rename and RoomUpdate push.
+rooms	PUT	/rooms/:roomId{[0-9]+}/description	apps/rooms/src/rooms.app.ts	2447	partially implemented	0.4 local integration tested. Owner description edit and RoomUpdate push.
+rooms	POST	/rooms/:roomId{[0-9]+}/clone	apps/rooms/src/rooms.app.ts	2385	partially implemented	0.4 local integration tested. Copies supported built-in scenes and capacity; no uploaded assets or extra subrooms.
+rooms	DELETE	/rooms/:roomId{[0-9]+}/interactionby/me/favorite	apps/rooms/src/rooms.app.ts	2356	not yet implemented	
+rooms	PUT	/rooms/:roomId{[0-9]+}/interactionby/me/favorite	apps/rooms/src/rooms.app.ts	2330	not yet implemented	
+rooms	DELETE	/rooms/:roomId{[0-9]+}/interactionby/me/cheer	apps/rooms/src/rooms.app.ts	2306	not yet implemented	
+rooms	PUT	/rooms/:roomId{[0-9]+}/interactionby/me/cheer	apps/rooms/src/rooms.app.ts	2280	not yet implemented	
+rooms	GET	/rooms/:roomId{[0-9]+}/interactionby/me	apps/rooms/src/rooms.app.ts	2252	not yet implemented	
+rooms	GET	/rooms/:roomId{[0-9]+}/boosts/:playerId{[0-9]+}/count	apps/rooms/src/rooms.app.ts	2235	not yet implemented	
+rooms	GET	/rooms/visitedby/:playerId{[0-9]+}	apps/rooms/src/rooms.app.ts	2193	not yet implemented	
+rooms	GET	/rooms/visitedby/me/count	apps/rooms/src/rooms.app.ts	2160	not yet implemented	
+rooms	GET	/rooms/visitedby/me	apps/rooms/src/rooms.app.ts	2135	not yet implemented	
+rooms	GET	/rooms/favoritedby/me	apps/rooms/src/rooms.app.ts	2110	not yet implemented	
+rooms	GET	/showcase/:playerId{[0-9]+}	apps/rooms/src/rooms.app.ts	2089	not yet implemented	
+rooms	GET	/rooms/ownedby/:accountId{[0-9]+}	apps/rooms/src/rooms.app.ts	2056	not yet implemented	
+rooms	PUT	/dormroom/me	apps/rooms/src/rooms.app.ts	2009	not yet implemented	
+rooms	GET	/dormroom/me	apps/rooms/src/rooms.app.ts	1979	implemented but awaiting client verification	0.4 local integration tested. Stable, automatically provisioned personal dorm ID.
+rooms	GET	/rooms/contributedby/me	apps/rooms/src/rooms.app.ts	1942	implemented but awaiting client verification	0.4 local integration tested. Created rooms and confirmed roles.
+rooms	GET	/rooms/createdby/me	apps/rooms/src/rooms.app.ts	1917	implemented but awaiting client verification	0.4 local integration tested. Caller-created rooms.
+rooms	GET	/rooms/ownedby/me	apps/rooms/src/rooms.app.ts	1898	implemented but awaiting client verification	0.4 local integration tested. Owned and co-owned rooms, excluding dorm.
+rooms	GET	/roomserver/rooms/createdby/me	apps/rooms/src/rooms.app.ts	1883	implemented but awaiting client verification	0.4 local integration tested. Legacy alias of createdby.
+rooms	POST	/rooms/bulk	apps/rooms/src/rooms.app.ts	1835	partially implemented	0.5 integration-tested. Repeated form IDs with a 100-ID limit and public-only filtering. Private room metadata requires caller access.
+rooms	GET	/rooms/bulk	apps/rooms/src/rooms.app.ts	1775	partially implemented	0.5 integration-tested. Repeated and comma-separated IDs, name lookup, and public-only filtering. Private room metadata requires caller access.
+rooms	GET	/featuredrooms/current	apps/rooms/src/rooms.app.ts	1733	not yet implemented	
+rooms	GET	/rooms/recommendations	apps/rooms/src/rooms.app.ts	1697	not yet implemented	
+rooms	GET	/rooms/base	apps/rooms/src/rooms.app.ts	1674	partially implemented	0.4 local integration tested. Selected built-in templates. No room asset or published-save cloning.
+rooms	GET	/rooms/carousel/rising	apps/rooms/src/rooms.app.ts	1649	not yet implemented	
+rooms	GET	/rooms/curated_playlists	apps/rooms/src/rooms.app.ts	1623	not yet implemented	
+rooms	GET	/rooms/hot	apps/rooms/src/rooms.app.ts	1588	not yet implemented	
+rooms	GET	/rooms/autocomplete_search	apps/rooms/src/rooms.app.ts	1546	not yet implemented	
+rooms	GET	/rooms/search/name	apps/rooms/src/rooms.app.ts	1506	implemented but awaiting client verification	0.4 local integration tested. Case-insensitive public room name prefix search.
+rooms	GET	/rooms/search	apps/rooms/src/rooms.app.ts	1472	partially implemented	0.4 local integration tested. Name terms and supported seed/community tags; pagination.
+rooms	POST	/rooms/create	apps/rooms/src/rooms.app.ts	1433	partially implemented	0.4 local integration tested. Private Studio room with a built-in Home scene. No Studio saves or uploads.
+rooms	GET	/rooms	apps/rooms/src/rooms.app.ts	1395	partially implemented	0.4 local integration tested. ID and name lookup, with private room visibility enforced on both.
+rooms	GET	/	apps/rooms/src/rooms.app.ts	1382	not yet implemented	
+rooms	GET	/openapi.json	apps/rooms/src/rooms.app.ts	5570	not yet implemented	
+storage	POST	/upload	apps/storage/src/storage.app.ts	362	not yet implemented	
+storage	POST	/upload/video	apps/storage/src/storage.app.ts	311	not yet implemented	
+storage	POST	/upload/unityassets	apps/storage/src/storage.app.ts	268	not yet implemented	
+storage	GET	/	apps/storage/src/storage.app.ts	247	not yet implemented	
+storage	GET	/openapi.json	apps/storage/src/storage.app.ts	472	not yet implemented	
+studio	POST	/internal/cloud-builds/:id/finish	apps/studio/src/cloud-builds.ts	419	not yet implemented	
+studio	POST	/internal/cloud-builds/:id/heartbeat	apps/studio/src/cloud-builds.ts	409	not yet implemented	
+studio	POST	/internal/cloud-builds/claim	apps/studio/src/cloud-builds.ts	378	not yet implemented	
+studio	POST	/cloud-builds/cancel	apps/studio/src/cloud-builds.ts	347	not yet implemented	
+studio	PUT	/cloud-builds/cancel	apps/studio/src/cloud-builds.ts	347	not yet implemented	
+studio	GET	/cloud-builds	apps/studio/src/cloud-builds.ts	339	not yet implemented	
+studio	POST	/cloud-builds/create	apps/studio/src/cloud-builds.ts	198	not yet implemented	
+studio	POST	/cloud-builds/custom-avatar-item/create-for-new-build-version	apps/studio/src/cloud-builds.ts	186	not yet implemented	
+studio	POST	/cloud-builds/custom-avatar-item/:itemId{[0-9a-fA-F-]{36}}/save/:saveId{[1-9][0-9]*}	apps/studio/src/cloud-builds.ts	182	not yet implemented	
+studio	GET	/cloud-builds/custom-avatar-item/:itemId{[0-9a-fA-F-]{36}}	apps/studio/src/cloud-builds.ts	165	not yet implemented	
+studio	GET	/1/apps/:secret	apps/studio/src/distribution.ts	108	not yet implemented	
+studio	GET	/1/apps/:secret/*	apps/studio/src/distribution.ts	108	not yet implemented	
+studio	GET	/collaboration/owners-in-room	apps/studio/src/studio.app.ts	309	not yet implemented	
+studio	GET	/cloud-builds/get-build-count-for-user	apps/studio/src/studio.app.ts	290	not yet implemented	
+studio	GET	/cloud-builds/get-rate-limit-config	apps/studio/src/studio.app.ts	280	not yet implemented	
+studio	POST	/cloud-builds/from-editor	apps/studio/src/studio.app.ts	276	not yet implemented	
+studio	GET	/cloud-builds/for-room	apps/studio/src/studio.app.ts	267	not yet implemented	
+studio	GET	/commonQuery/rrstudio/chiprecommendations	apps/studio/src/studio.app.ts	259	not yet implemented	
+studio	GET	/access/override/:accountId{[1-9][0-9]*}	apps/studio/src/studio.app.ts	192	not yet implemented	
+studio	GET	/	apps/studio/src/studio.app.ts	189	not yet implemented	
+studio	POST	/avatar-items	apps/studio/src/studio.app.ts	187	not yet implemented	
+studio	MOUNT	/	apps/studio/src/studio.app.ts	181	not yet implemented	
+studio	MOUNT	/	apps/studio/src/studio.app.ts	180	not yet implemented	
+www	ALL	*	apps/www/src/www.app.ts	962	not yet implemented	
+www	GET	/docs/openapi/:service	apps/www/src/www.app.ts	948	not yet implemented	
+www	GET	/docs	apps/www/src/www.app.ts	947	not yet implemented	
+www	GET	/privacy	apps/www/src/www.app.ts	940	not yet implemented	
+www	PUT	/api/staff/lists/:slug	apps/www/src/www.app.ts	934	not yet implemented	
+www	GET	/api/staff/lists/:slug	apps/www/src/www.app.ts	933	not yet implemented	
+www	GET	/api/staff/lists	apps/www/src/www.app.ts	932	not yet implemented	
+www	DELETE	/api/staff/studio-access/:id	apps/www/src/www.app.ts	929	not yet implemented	
+www	POST	/api/staff/studio-access	apps/www/src/www.app.ts	928	not yet implemented	
+www	GET	/api/staff/studio-access	apps/www/src/www.app.ts	927	not yet implemented	
+www	PUT	/api/staff/account-flags	apps/www/src/www.app.ts	924	not yet implemented	
+www	GET	/api/staff/account-flags	apps/www/src/www.app.ts	923	not yet implemented	
+www	PUT	/api/staff/sandbox	apps/www/src/www.app.ts	919	not yet implemented	
+www	GET	/api/staff/sandbox	apps/www/src/www.app.ts	918	not yet implemented	
+www	POST	/api/staff/players/:id/clear-dorm	apps/www/src/www.app.ts	914	not yet implemented	
+www	POST	/api/staff/players/:id/clear-password	apps/www/src/www.app.ts	912	not yet implemented	
+www	POST	/api/staff/players/:id/username-changes	apps/www/src/www.app.ts	911	not yet implemented	
+www	POST	/api/staff/players/:id/grant-plus	apps/www/src/www.app.ts	910	not yet implemented	
+www	POST	/api/staff/discord-roles/supporter-gift	apps/www/src/www.app.ts	908	not yet implemented	
+www	POST	/api/staff/discord-roles/sync	apps/www/src/www.app.ts	906	not yet implemented	
+www	POST	/api/staff/discord-roles/:roleId/gift-tokens	apps/www/src/www.app.ts	903	not yet implemented	
+www	POST	/api/staff/online/gift-tokens	apps/www/src/www.app.ts	900	not yet implemented	
+www	POST	/api/staff/rooms/:roomId/gift-tokens	apps/www/src/www.app.ts	898	not yet implemented	
+www	POST	/api/staff/players/:id/gift-xp	apps/www/src/www.app.ts	896	not yet implemented	
+www	POST	/api/staff/players/:id/gift-item	apps/www/src/www.app.ts	895	not yet implemented	
+www	POST	/api/staff/players/:id/gift-tokens	apps/www/src/www.app.ts	893	not yet implemented	
+www	GET	/api/staff/players/:id/linked	apps/www/src/www.app.ts	890	not yet implemented	
+www	GET	/api/staff/players/:id	apps/www/src/www.app.ts	889	not yet implemented	
+www	GET	/api/staff/bans	apps/www/src/www.app.ts	888	not yet implemented	
+www	POST	/api/staff/reports/:id/ban	apps/www/src/www.app.ts	887	not yet implemented	
+www	GET	/api/staff/reports/:id	apps/www/src/www.app.ts	886	not yet implemented	
+www	POST	/api/staff/reports	apps/www/src/www.app.ts	885	not yet implemented	
+www	GET	/api/staff/reports	apps/www/src/www.app.ts	884	not yet implemented	
+www	GET	/api/staff/reports/top-reported	apps/www/src/www.app.ts	883	not yet implemented	
+www	GET	/api/studio-access	apps/www/src/www.app.ts	866	not yet implemented	
+www	POST	/api/account/delete	apps/www/src/www.app.ts	814	not yet implemented	
+www	POST	/api/benefits/claim	apps/www/src/www.app.ts	622	not yet implemented	
+www	POST	/api/benefits/unlink	apps/www/src/www.app.ts	538	not yet implemented	
+www	GET	/api/benefits/status	apps/www/src/www.app.ts	478	not yet implemented	
+www	POST	/api/login/discord	apps/www/src/www.app.ts	404	not yet implemented	
+www	POST	/api/signup	apps/www/src/www.app.ts	326	not yet implemented	
+www	GET	/api/stats/online	apps/www/src/www.app.ts	276	not yet implemented	
+www	GET	/server-status	apps/www/src/www.app.ts	257	not yet implemented	
+www	GET	/api/config	apps/www/src/www.app.ts	216	not yet implemented	

@@ -1,0 +1,16 @@
+[Server]
+RecNet NameServer Host = https://ns.rec.example.test
+
+[Photon]
+App Id Realtime = 7a6eafd9-8a49-47bd-98da-c743525a3e72
+App Id Voice =
+App Id Chat =
+
+[Advanced]
+Enabled Advanced Settings = true
+Photon NameServer = 192.0.2.10
+Photon NameServer Port = 5058
+Debug = false
+
+[KromaRec]
+Match HTTPS Host = match.rec.example.test
