@@ -17,7 +17,7 @@ import tempfile
 import time
 from urllib.parse import urlencode
 
-from smoke import ROOT, SECRET, rss
+from tools.smoke import ROOT, SECRET, rss
 
 
 class HubSocket:
@@ -76,7 +76,7 @@ def run(binary, baseline, baseline_schema=7, luxon_port=None, secure_luxon=None)
         with socket.socket() as listener:
             listener.bind(("127.0.0.1", 0))
             port = listener.getsockname()[1]
-        from luxon_smoke import APP
+        from tools.luxon_smoke import APP
         env = {**os.environ, "KROMAREC_BIND": f"127.0.0.1:{port}", "KROMAREC_DOMAIN": "rec.test",
                "KROMAREC_ASSETS": str(ROOT / "assets"), "KROMAREC_DB": str(db_path),
                "KROMAREC_JWT_SECRET": SECRET, "KROMAREC_PASSWORD_SIGNUP": "true",
@@ -313,15 +313,15 @@ def run(binary, baseline, baseline_schema=7, luxon_port=None, secure_luxon=None)
                 assert request("match", "/player/heartbeat", "POST", token, {"LoginLock":player})["roomInstance"]["roomInstanceId"] == iid
 
             if luxon_port:
-                from luxon_smoke import run as transport
+                from tools.luxon_smoke import run as transport
                 def footprint():
                     backend, luxon = rss(process.pid), rss(sidecar.pid)
                     print(f"two wire peers | KromaRec {backend} KiB | Luxon {luxon} KiB | combined {backend+luxon} KiB")
                 transport(luxon_port, first["photonRoomId"], str(a_id), str(b_id), APP,
                           tickets if secure_luxon else (None,None), footprint if secure_luxon else None)
             if secure_luxon:
-                from luxon_smoke import Peer, authenticate, enter
-                from smoke import signed_token
+                from tools.luxon_smoke import Peer, authenticate, enter
+                from tools.smoke import signed_token
                 def reject(ticket, app=APP):
                     peer = Peer(("127.0.0.1",luxon_port))
                     try:
@@ -391,7 +391,7 @@ def run(binary, baseline, baseline_schema=7, luxon_port=None, secure_luxon=None)
                     try:
                         # Cross the 12s watchdog with healthy leases and measure
                         # both processes while exchanging one round trip/second.
-                        from memory_rss import cpu_seconds
+                        from tools.memory_rss import cpu_seconds
                         started = time.monotonic()
                         cpu = [cpu_seconds(pid) for pid in (process.pid, sidecar.pid)]
                         for sequence in range(15):
@@ -417,7 +417,7 @@ def run(binary, baseline, baseline_schema=7, luxon_port=None, secure_luxon=None)
                 print("PASS | live password/logout/ban eviction, observer continuity and fresh admission")
                 private = request("match",match_path,"POST",a,{"JoinMode":2})["roomInstance"]
                 enter(luxon_port,str(c_id),private["photonRoomId"],APP,issue(c),reject_join=True)
-                from luxon_smoke import endpoint
+                from tools.luxon_smoke import endpoint
                 # A token already issued by Luxon cannot carry a banned user into Master.
                 name_peer = Peer(("127.0.0.1",luxon_port))
                 try:
@@ -493,7 +493,7 @@ def run(binary, baseline, baseline_schema=7, luxon_port=None, secure_luxon=None)
                 print("PASS | Luxon rejects invalid, expired, banned and unauthorized joins at the network boundary")
 
             negotiation = request("notify", "/hub/v1/negotiate?negotiateVersion=1","POST", b)
-            from smoke import signed_token
+            from tools.smoke import signed_token
             limited = HubSocket(port, signed_token(str(b_id), int(time.time()) + 2), "expiry")
             try:
                 assert limited.file.read(1) == b""
