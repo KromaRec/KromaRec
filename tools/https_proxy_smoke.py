@@ -14,9 +14,9 @@ from unittest.mock import patch
 from urllib.parse import urlencode
 from urllib.request import HTTPSHandler, Request, build_opener
 
-from tools.https_preflight import verify
-from tools.rooms_smoke import HubSocket
-from tools.smoke import ROOT, SECRET
+from https_preflight import verify
+from rooms_smoke import HubSocket
+from smoke import ROOT, SECRET
 
 
 def listen_port():

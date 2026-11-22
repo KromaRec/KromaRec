@@ -7,7 +7,7 @@ from statistics import median
 from tempfile import TemporaryDirectory
 from time import sleep
 
-from tools.smoke import smoke
+from smoke import smoke
 
 
 def cpu_seconds(pid):

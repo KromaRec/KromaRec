@@ -5,6 +5,10 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 IMPLEMENTED = {
+    **{service: {"GET /"} for service in (
+        "ai", "cards", "chat", "commerce", "img", "leaderboard", "link", "lists",
+        "platformnotifications", "roomcomments", "rooms", "storage", "studio",
+    )},
     "ns": {"GET /"},
     "discovery": {"GET /"},
     "api": {"GET /api/config/v1/amplitude", "GET /api/config/v1/azurespeech",

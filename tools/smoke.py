@@ -51,7 +51,7 @@ def smoke(binary, work, schema=8, observe=None):
     process = subprocess.Popen([binary], env={
         **os.environ,
         "KROMAREC_DOMAIN": "rec.test",
-        "KROMAREC_SUBDOMAINS": '{"playersettings":"settings"}',
+        "KROMAREC_SUBDOMAINS": '{"playersettings":"settings","discovery":"browse","ai":"assistant","www":"web"}',
         "KROMAREC_BIND": f"127.0.0.1:{port}",
         "KROMAREC_ASSETS": str(assets),
         "KROMAREC_DB": str(work / "settings.sqlite3"),
@@ -74,12 +74,15 @@ def smoke(binary, work, schema=8, observe=None):
         idle = rss(process.pid)
         if observe:
             observe("idle", process.pid)
-        status, headers, body = request("discovery", "/")
+        status, headers, body = request("browse", "/")
         assert status == 200 and headers["Content-Type"] == "application/json"
         assert json.loads(body) == {"service": "discovery", "status": "ok"}
-        assert json.loads(request("ns", "/")[2])["Discovery"] == "https://discovery.rec.test"
-        assert request("discovery", "/missing")[0] == 404
-        assert request("discovery", "/", "POST")[0] == 404
+        assert json.loads(request("ns", "/")[2])["Discovery"] == "https://browse.rec.test"
+        assert request("browse", "/missing")[0] == 404
+        assert request("browse", "/", "POST")[0] == 404
+        assert json.loads(request("assistant", "/")[2]) == {"service": "ai", "status": "ok"}
+        assert json.loads(request("api", "/api/config/v2")[2])["ShareBaseUrl"] == "https://web.rec.test/{0}"
+
         assert json.loads(request("", "/")[2])["PlayerSettings"] == "https://settings.rec.test"
         assert json.loads(request("api", "/api/versioncheck/v4?v=20230414.01")[2])["VersionStatus"] == 0
         assert json.loads(request("api", "/api/versioncheck/v4?v=20250718")[2])["VersionStatus"] == 1

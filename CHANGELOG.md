@@ -1,3 +1,7 @@
+# KromaRec 0.10.1 routing update
+
+Added 13 pinned public service health routes, routed overridden discovery and service names, and honored the www override in the API share URL. The release includes per-host HTTPS regression coverage and preserves schema 8. See [the audit](docs/API-AUDIT.md) for results and remaining gaps.
+
 # KromaRec 0.5.0
 
 - Match the pinned RecFlare startup flow by persisting new accounts in the canonical Orientation scene and retaining it during the client's early logout. Later room entry clears onboarding presence.

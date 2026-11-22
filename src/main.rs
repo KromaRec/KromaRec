@@ -85,7 +85,11 @@ async fn dispatch(State(app): State<Arc<App>>, request: Request<Body>) -> Respon
             StatusCode::OK,
             r#"{"service":"discovery","status":"ok"}"#,
         ),
-        ("moderation", &Method::GET, "/") => "hello, world!".into_response(),
+        ("ai" | "chat" | "commerce" | "img" | "roomcomments" | "rooms", &Method::GET, "/") => {
+            json_body(StatusCode::OK, format!(r#"{{"service":"{service}","status":"ok"}}"#))
+        }
+        ("cards" | "leaderboard" | "link" | "lists" | "moderation" | "platformnotifications"
+         | "storage" | "studio", &Method::GET, "/") => "hello, world!".into_response(),
         ("moderation", &Method::GET, "/voice/config") => {
             json_body(StatusCode::OK, r#"{"AccountId":"","ApiKey":""}"#)
         }
@@ -334,6 +338,19 @@ async fn run() -> Result<(), Box<dyn std::error::Error>> {
         "cdn",
         "moderation",
         "playersettings",
+        "ai",
+        "cards",
+        "chat",
+        "commerce",
+        "discovery",
+        "img",
+        "leaderboard",
+        "link",
+        "lists",
+        "platformnotifications",
+        "roomcomments",
+        "storage",
+        "studio",
     ] {
         let alias = overrides
             .get(service)
@@ -345,7 +362,8 @@ async fn run() -> Result<(), Box<dyn std::error::Error>> {
     }
     let mut config: serde_json::Value =
         serde_json::from_str(include_str!("../compat/api-config-v2.json"))?;
-    config["ShareBaseUrl"] = json!(format!("https://www.{domain}/{{0}}"));
+    let www = overrides.get("www").map_or("www", String::as_str);
+    config["ShareBaseUrl"] = json!(format!("https://{www}.{domain}/{{0}}"));
     let app = Arc::new(App {
         photon: Arc::new(sessions::Photon::from_env()),
         hub: Arc::new(notify::Hub::default()),

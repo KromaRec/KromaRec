@@ -31,7 +31,7 @@ ai	GET	/roomieai/user/facts	apps/ai/src/ai.app.ts	225	not yet implemented
 ai	GET	/roomieai/user/access	apps/ai/src/ai.app.ts	171	not yet implemented	
 ai	GET	/gameai/room/:roomId{[0-9]+}/spendsummary	apps/ai/src/ai.app.ts	136	not yet implemented	
 ai	GET	/gameai/user/access	apps/ai/src/ai.app.ts	103	not yet implemented	
-ai	GET	/	apps/ai/src/ai.app.ts	90	not yet implemented	
+ai	GET	/	apps/ai/src/ai.app.ts	90	implemented but awaiting client verification	
 ai	GET	/openapi.json	apps/ai/src/ai.app.ts	390	not yet implemented	
 api	MOUNT	/	apps/api/src/api.app.ts	68	not yet implemented	
 api	MOUNT	/	apps/api/src/api.app.ts	67	not yet implemented	
@@ -248,7 +248,7 @@ auth	POST	/cachedlogin/forplatformid/:platform/:id	apps/auth/src/auth.app.ts	884
 auth	GET	/eac/challenge	apps/auth/src/auth.app.ts	857	not yet implemented	
 auth	GET	/openapi.json	apps/auth/src/auth.app.ts	2119	not yet implemented	
 cards	GET	/iam/me/channels/:channel	apps/cards/src/cards.app.ts	26	not yet implemented	
-cards	GET	/	apps/cards/src/cards.app.ts	23	not yet implemented	
+cards	GET	/	apps/cards/src/cards.app.ts	23	implemented but awaiting client verification	
 cdn	GET	/unityasset/:filename{.+}	apps/cdn/src/cdn.app.ts	439	not yet implemented	
 cdn	HEAD	/unityasset/:filename{.+}	apps/cdn/src/cdn.app.ts	419	not yet implemented	
 cdn	GET	/roomunityasset/:filename{.+}	apps/cdn/src/cdn.app.ts	398	implemented but awaiting client verification	
@@ -289,7 +289,7 @@ chat	GET	/thread/party	apps/chat/src/chat.app.ts	853	not yet implemented
 chat	GET	/settings/partyinvite	apps/chat/src/chat.app.ts	785	not yet implemented	
 chat	POST	/thread	apps/chat/src/chat.app.ts	714	not yet implemented	
 chat	GET	/thread	apps/chat/src/chat.app.ts	679	not yet implemented	
-chat	GET	/	apps/chat/src/chat.app.ts	664	not yet implemented	
+chat	GET	/	apps/chat/src/chat.app.ts	664	implemented but awaiting client verification	
 chat	GET	/openapi.json	apps/chat/src/chat.app.ts	1547	not yet implemented	
 clubs	POST	/club/:clubId{[0-9]+}/leave	apps/clubs/src/clubs.app.ts	1754	not yet implemented	
 clubs	POST	/club/:clubId{[0-9]+}/join	apps/clubs/src/clubs.app.ts	1726	not yet implemented	
@@ -339,7 +339,7 @@ commerce	GET	/api/catalog/v1/all	apps/commerce/src/commerce.app.ts	111	not yet i
 commerce	POST	/purchase/v1/initiatepurchase	apps/commerce/src/commerce.app.ts	90	not yet implemented	
 commerce	GET	/purchaseRestriction/isplayerrestricted	apps/commerce/src/commerce.app.ts	75	not yet implemented	
 commerce	GET	/purchase/v1/hasspentmoney	apps/commerce/src/commerce.app.ts	61	not yet implemented	
-commerce	GET	/	apps/commerce/src/commerce.app.ts	48	not yet implemented	
+commerce	GET	/	apps/commerce/src/commerce.app.ts	48	implemented but awaiting client verification	
 commerce	GET	/openapi.json	apps/commerce/src/commerce.app.ts	183	not yet implemented	
 datacollection	GET	/sampling	apps/datacollection/src/datacollection.app.ts	56	not yet implemented	Excluded by the no-telemetry requirement
 datacollection	POST	/data/events	apps/datacollection/src/datacollection.app.ts	47	not yet implemented	Excluded by the no-telemetry requirement
@@ -448,24 +448,24 @@ econ	GET	/api/avatar/v1/defaultbaseavataritems	apps/econ/src/econ.app.ts	3076	no
 econ	GET	/api/avatar/v1/defaultunlocked	apps/econ/src/econ.app.ts	3068	not yet implemented	
 econ	POST	/api/avatar/v1/lockeditems/bulk	apps/econ/src/econ.app.ts	3021	not yet implemented	
 econ	GET	/openapi.json	apps/econ/src/econ.app.ts	7906	not yet implemented	
-img	GET	/	apps/img/src/img.app.ts	342	not yet implemented	
+img	GET	/	apps/img/src/img.app.ts	342	implemented but awaiting client verification	
 img	GET	/openapi.json	apps/img/src/img.app.ts	361	not yet implemented	
 img	GET	/:key{.+}	apps/img/src/img.app.ts	400	not yet implemented	
 leaderboard	POST	/leaderboard/CheckAndSetStat	apps/leaderboard/src/leaderboard.app.ts	308	not yet implemented	
 leaderboard	POST	/leaderboard/GetPlayerRank	apps/leaderboard/src/leaderboard.app.ts	258	not yet implemented	
 leaderboard	POST	/leaderboard/GetRanks	apps/leaderboard/src/leaderboard.app.ts	209	not yet implemented	
 leaderboard	POST	/leaderboard/GetNearbyScores	apps/leaderboard/src/leaderboard.app.ts	162	not yet implemented	
-leaderboard	GET	/	apps/leaderboard/src/leaderboard.app.ts	132	not yet implemented	
+leaderboard	GET	/	apps/leaderboard/src/leaderboard.app.ts	132	implemented but awaiting client verification	
 leaderboard	GET	/openapi.json	apps/leaderboard/src/leaderboard.app.ts	367	not yet implemented	
 link	POST	/actionlink	apps/link/src/link.app.ts	50	not yet implemented	
-link	GET	/	apps/link/src/link.app.ts	39	not yet implemented	
+link	GET	/	apps/link/src/link.app.ts	39	implemented but awaiting client verification	
 lists	POST	/contextualfeatures	apps/lists/src/lists.app.ts	1004	not yet implemented	
 lists	GET	/algorithmiclists/:list	apps/lists/src/lists.app.ts	875	not yet implemented	
 lists	DELETE	/curatedlists/:listId/items/:itemId	apps/lists/src/lists.app.ts	821	not yet implemented	
 lists	PUT	/curatedlists/:name/items/:itemId/createlistifneeded	apps/lists/src/lists.app.ts	758	not yet implemented	
 lists	GET	/curatedlists	apps/lists/src/lists.app.ts	689	not yet implemented	
 lists	GET	/curatedlists/bulk	apps/lists/src/lists.app.ts	632	not yet implemented	
-lists	GET	/	apps/lists/src/lists.app.ts	609	not yet implemented	
+lists	GET	/	apps/lists/src/lists.app.ts	609	implemented but awaiting client verification	
 lists	GET	/openapi.json	apps/lists/src/lists.app.ts	1032	not yet implemented	
 match	GET	/rooms/requiring/rrplus	apps/match/src/match.app.ts	3890	not yet implemented	
 match	GET	/rooms/requiring/developer	apps/match/src/match.app.ts	3878	not yet implemented	
@@ -522,7 +522,7 @@ platformnotifications	GET	/preferences	apps/platformnotifications/src/platformno
 platformnotifications	GET	/crm/me/config/v3	apps/platformnotifications/src/platformnotifications.app.ts	120	not yet implemented	
 platformnotifications	GET	/config/categories	apps/platformnotifications/src/platformnotifications.app.ts	92	not yet implemented	
 platformnotifications	GET	/accounts/:id{[0-9]+}/receives/GameplayInvites	apps/platformnotifications/src/platformnotifications.app.ts	69	not yet implemented	
-platformnotifications	GET	/	apps/platformnotifications/src/platformnotifications.app.ts	57	not yet implemented	
+platformnotifications	GET	/	apps/platformnotifications/src/platformnotifications.app.ts	57	implemented but awaiting client verification	
 playersettings	DELETE	/playersettings	apps/playersettings/src/playersettings.app.ts	228	implemented but awaiting client verification	
 playersettings	PUT	/playersettings	apps/playersettings/src/playersettings.app.ts	188	implemented but awaiting client verification	
 playersettings	GET	/playersettings	apps/playersettings/src/playersettings.app.ts	151	implemented but awaiting client verification	
@@ -530,7 +530,7 @@ playersettings	GET	/	apps/playersettings/src/playersettings.app.ts	138	implement
 playersettings	GET	/openapi.json	apps/playersettings/src/playersettings.app.ts	280	not yet implemented	
 roomcomments	POST	/comments/create/:roomId	apps/roomcomments/src/roomcomments.app.ts	155	not yet implemented	
 roomcomments	GET	/comments/get/:roomId	apps/roomcomments/src/roomcomments.app.ts	92	not yet implemented	
-roomcomments	GET	/	apps/roomcomments/src/roomcomments.app.ts	80	not yet implemented	
+roomcomments	GET	/	apps/roomcomments/src/roomcomments.app.ts	80	implemented but awaiting client verification	
 roomcomments	GET	/openapi.json	apps/roomcomments/src/roomcomments.app.ts	222	not yet implemented	
 rooms	GET	/photon_access_token	apps/rooms/src/rooms.app.ts	5531	partially implemented	0.4 local integration tested. Role-specific default permissions; empty token as upstream; no subroom overrides.
 rooms	POST	/unity_assets/baked/bulk	apps/rooms/src/rooms.app.ts	5484	not yet implemented	
@@ -614,12 +614,12 @@ rooms	GET	/rooms/search/name	apps/rooms/src/rooms.app.ts	1506	implemented but aw
 rooms	GET	/rooms/search	apps/rooms/src/rooms.app.ts	1472	partially implemented	0.4 local integration tested. Name terms and supported seed/community tags; pagination.
 rooms	POST	/rooms/create	apps/rooms/src/rooms.app.ts	1433	partially implemented	0.4 local integration tested. Private Studio room with a built-in Home scene. No Studio saves or uploads.
 rooms	GET	/rooms	apps/rooms/src/rooms.app.ts	1395	partially implemented	0.4 local integration tested. ID and name lookup, with private room visibility enforced on both.
-rooms	GET	/	apps/rooms/src/rooms.app.ts	1382	not yet implemented	
+rooms	GET	/	apps/rooms/src/rooms.app.ts	1382	implemented but awaiting client verification	
 rooms	GET	/openapi.json	apps/rooms/src/rooms.app.ts	5570	not yet implemented	
 storage	POST	/upload	apps/storage/src/storage.app.ts	362	not yet implemented	
 storage	POST	/upload/video	apps/storage/src/storage.app.ts	311	not yet implemented	
 storage	POST	/upload/unityassets	apps/storage/src/storage.app.ts	268	not yet implemented	
-storage	GET	/	apps/storage/src/storage.app.ts	247	not yet implemented	
+storage	GET	/	apps/storage/src/storage.app.ts	247	implemented but awaiting client verification	
 storage	GET	/openapi.json	apps/storage/src/storage.app.ts	472	not yet implemented	
 studio	POST	/internal/cloud-builds/:id/finish	apps/studio/src/cloud-builds.ts	419	not yet implemented	
 studio	POST	/internal/cloud-builds/:id/heartbeat	apps/studio/src/cloud-builds.ts	409	not yet implemented	
@@ -640,7 +640,7 @@ studio	POST	/cloud-builds/from-editor	apps/studio/src/studio.app.ts	276	not yet 
 studio	GET	/cloud-builds/for-room	apps/studio/src/studio.app.ts	267	not yet implemented	
 studio	GET	/commonQuery/rrstudio/chiprecommendations	apps/studio/src/studio.app.ts	259	not yet implemented	
 studio	GET	/access/override/:accountId{[1-9][0-9]*}	apps/studio/src/studio.app.ts	192	not yet implemented	
-studio	GET	/	apps/studio/src/studio.app.ts	189	not yet implemented	
+studio	GET	/	apps/studio/src/studio.app.ts	189	implemented but awaiting client verification	
 studio	POST	/avatar-items	apps/studio/src/studio.app.ts	187	not yet implemented	
 studio	MOUNT	/	apps/studio/src/studio.app.ts	181	not yet implemented	
 studio	MOUNT	/	apps/studio/src/studio.app.ts	180	not yet implemented	
