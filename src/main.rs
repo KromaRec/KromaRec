@@ -81,6 +81,10 @@ async fn dispatch(State(app): State<Arc<App>>, request: Request<Body>) -> Respon
         .then(|| bootstrap::trace_label(service, path));
     let mut response = match (service, verb, path) {
         ("" | "ns", &Method::GET, "/") => json_body(StatusCode::OK, app.discovery.clone()),
+        ("discovery", &Method::GET, "/") => json_body(
+            StatusCode::OK,
+            r#"{"service":"discovery","status":"ok"}"#,
+        ),
         ("moderation", &Method::GET, "/") => "hello, world!".into_response(),
         ("moderation", &Method::GET, "/voice/config") => {
             json_body(StatusCode::OK, r#"{"AccountId":"","ApiKey":""}"#)

@@ -74,6 +74,12 @@ def smoke(binary, work, schema=8, observe=None):
         idle = rss(process.pid)
         if observe:
             observe("idle", process.pid)
+        status, headers, body = request("discovery", "/")
+        assert status == 200 and headers["Content-Type"] == "application/json"
+        assert json.loads(body) == {"service": "discovery", "status": "ok"}
+        assert json.loads(request("ns", "/")[2])["Discovery"] == "https://discovery.rec.test"
+        assert request("discovery", "/missing")[0] == 404
+        assert request("discovery", "/", "POST")[0] == 404
         assert json.loads(request("", "/")[2])["PlayerSettings"] == "https://settings.rec.test"
         assert json.loads(request("api", "/api/versioncheck/v4?v=20230414.01")[2])["VersionStatus"] == 0
         assert json.loads(request("api", "/api/versioncheck/v4?v=20250718")[2])["VersionStatus"] == 1

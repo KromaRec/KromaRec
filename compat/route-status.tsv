@@ -347,7 +347,7 @@ datacollection	POST	/data/event	apps/datacollection/src/datacollection.app.ts	38
 datacollection	GET	/	apps/datacollection/src/datacollection.app.ts	31	not yet implemented	Excluded by the no-telemetry requirement
 discovery	GET	/sections/pagesource/:type	apps/discovery/src/discovery.app.ts	106	not yet implemented	
 discovery	GET	/sections/bulk	apps/discovery/src/discovery.app.ts	66	not yet implemented	
-discovery	GET	/	apps/discovery/src/discovery.app.ts	43	not yet implemented	
+discovery	GET	/	apps/discovery/src/discovery.app.ts	43	implemented but awaiting client verification	
 discovery	GET	/openapi.json	apps/discovery/src/discovery.app.ts	144	not yet implemented	
 econ	POST	/api/influencerpartnerprogram/remove	apps/econ/src/econ.app.ts	7870	not yet implemented	
 econ	POST	/api/influencerpartnerprogram/support	apps/econ/src/econ.app.ts	7826	not yet implemented	

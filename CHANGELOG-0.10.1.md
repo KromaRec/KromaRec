@@ -1,5 +1,7 @@
 # KromaRec 0.10.1
 
+- Added the public `GET /` health check on the discovery host and regression checks for its JSON response, host routing and method handling. The name server continues to serve the service directory.
+
 - Password changes and completed RecNet logouts now invalidate active SignalR connections and admitted Game actors. Admission and account invalidation are ordered by the existing SQLite executor. A cancelled HTTP request cannot skip invalidation after its database mutation commits.
 - SignalR respects the expiry of the bearer used to open a socket. A stale login lock and the Orientation logout exception retain their existing behavior. Normal logout preserves the existing HTTP login contract.
 - The updated Luxon 1.5 Game handler holds a bounded, authenticated loopback connection for each actor, observes backend loss and uses the normal ENet disconnect and actor-leave path. Active reservations and operator SQL bans are rechecked while an actor is connected. There are no database lookups on the event relay path.

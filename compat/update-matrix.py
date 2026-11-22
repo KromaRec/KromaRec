@@ -6,6 +6,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 IMPLEMENTED = {
     "ns": {"GET /"},
+    "discovery": {"GET /"},
     "api": {"GET /api/config/v1/amplitude", "GET /api/config/v1/azurespeech",
             "GET /api/config/v1/backtrace", "GET /api/config/v2", "GET /api/gameconfigs/v1/all",
             "GET /api/versioncheck/v4", "GET /api/versioncheck/islandedversions",

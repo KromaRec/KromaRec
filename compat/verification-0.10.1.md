@@ -1,5 +1,7 @@
 # KromaRec 0.10.1 verification
 
+The results below describe the original 0.10.1 build. The subsequent discovery health fix was checked against the pinned handler and the new test reproduced the failure on the original binary. The patched source was subsequently compiled using Rust 1.100.0 with the locked release profile for x86_64 GNU and musl. Both binaries passed the updated HTTP smoke test. Both Rust unit tests passed on GNU. The musl binary is static PIE.
+
 **Native Rec Room PC 20230414 startup and gameplay: UNVERIFIED.** All network clients used in this report were Python probes. They connected to the release executables, SQLite, Caddy and patched Luxon on Linux.
 
 ## Implemented and exercised

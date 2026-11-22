@@ -47,6 +47,7 @@ pub fn serve(app: &crate::App, service: &str, method: &Method, uri: &Uri) -> Res
 /// Trace only fixed route labels. Never include an arbitrary URL, ID or query.
 pub fn trace_label(service: &str, path: &str) -> (&'static str, &'static str) {
     match (service, path) {
+        ("discovery", "/") => ("discovery", "health"),
         ("" | "ns", "/") => ("ns", "discovery"),
         ("api", "/api/versioncheck/v4" | "/api/versioncheck/islandedversions") => {
             ("api", "versioncheck")
