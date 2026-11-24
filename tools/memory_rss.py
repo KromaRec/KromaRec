@@ -20,7 +20,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("binaries", nargs="+", type=Path)
     parser.add_argument("--runs", type=int, default=3)
-    parser.add_argument("--schema", type=int, default=8)
+    parser.add_argument("--schema", type=int, default=9)
     parser.add_argument("--idle-seconds", type=float, default=2.0)
     args = parser.parse_args()
     if args.idle_seconds <= 0:

@@ -29,15 +29,16 @@ PROBES = {
     "match": ("GET", "/player/connection-info", 401),
     "notify": ("POST", "/hub/v1/negotiate?negotiateVersion=1", 200),
 }
-for host, path in {
-    "ai": "/gameai/user/access", "cards": "/iam/me/channels/Announcements",
-    "chat": "/thread/1/message", "clubs": "/club/1", "commerce": "/purchase/v1/hasspentmoney",
-    "discovery": "/sections/bulk", "econ": "/api/influencerpartnerprogram/influencers",
-    "img": "/openapi.json", "leaderboard": "/openapi.json", "lists": "/curatedlists",
-    "platformnotifications": "/preferences", "roomcomments": "/comments/get/1",
-    "storage": "/openapi.json", "studio": "/cloud-builds", "www": "/privacy",
+for host, (path, status) in {
+    "ai": ("/gameai/user/access", 401), "cards": ("/iam/me/channels/Announcements", 401),
+    "chat": ("/thread/1/message", 404), "clubs": ("/club/1", 404),
+    "commerce": ("/purchase/v1/hasspentmoney", 200), "discovery": ("/sections/bulk", 200),
+    "econ": ("/api/influencerpartnerprogram/influencers", 404), "img": ("/openapi.json", 404),
+    "leaderboard": ("/openapi.json", 404), "lists": ("/curatedlists", 200),
+    "platformnotifications": ("/preferences", 404), "roomcomments": ("/comments/get/1", 200),
+    "storage": ("/openapi.json", 404), "studio": ("/cloud-builds", 400), "www": ("/privacy", 404),
 }.items():
-    PROBES[host] = ("GET", path, 404)
+    PROBES[host] = ("GET", path, status)
 PROBES["link"] = ("POST", "/actionlink", 404)
 
 
@@ -129,6 +130,11 @@ def test(binary, caddy, baseline):
                 rows.append([label, host, dns, r[0], r[1], r[2].decode(), result])
             with socket.create_connection(("127.0.0.1",gate),timeout=2):
                 pass
+        if not baseline:
+            for overrides in ({"cdn":"cms"}, {"www":"NS"}, {"strings":"Geo"}):
+                collision = subprocess.run([binary], env={**env, "KROMAREC_SUBDOMAINS":json.dumps(overrides)},
+                                           capture_output=True, timeout=5)
+                assert collision.returncode and b"same subdomain" in collision.stderr
         bad_gate_env = {**env, "KROMAREC_PHOTON_GATE_ADDR": f"0.0.0.0:{gate}"}
         denied = subprocess.run([binary], env=bad_gate_env, capture_output=True, timeout=5)
         assert denied.returncode != 0 and b"gate must bind to 127.0.0.1" in denied.stderr

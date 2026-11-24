@@ -1,3 +1,18 @@
+# KromaRec 0.10.3
+
+- Validate all advertised service hostnames and the NameServer together before opening SQLite. Conflicting custom hostnames previously sent clients to the wrong service.
+- Apply the existing login version length limit during GET /api/versioncheck/v4. The build check and password grant now agree on overlong dotted build strings.
+- The client-side HTTPS preflight identifies DNS, certificate verification and connection refusal separately and reports overall success after validating response contracts.
+- Exercise real Luxon admission for synthetic Orientation and dorm clients, and verify ten independent RecCenter actors receive 900 event deliveries. See [measurements and native blockers](docs/verification-0.10.3.md).
+- SQLite remains at schema 9. The existing patched Luxon 1.5 protocol and application dependencies are retained.
+
+# KromaRec 0.10.2
+
+- Read discovery sections by repeated ID and serve curated list captures and stored owner lists with numeric 64-bit list IDs.
+- Query persistent room comments with paging, public club profiles and Studio build metadata. Migration 009 adds empty tables without modifying existing account or room rows.
+- Match Cards channel validation, account-channel lookup, Game AI refusal and the no-purchases response to the pinned service contracts. No upstream services or new runtime dependencies are required.
+- Added nonempty, negative, authorization and cross-host regression checks. All 33 configured services remain in the HTTPS suite. See [verification](docs/verification-0.10.2.md).
+
 # KromaRec 0.10.1 routing update
 
 Added 13 pinned public service health routes, routed overridden discovery and service names, and honored the www override in the API share URL. The release includes per-host HTTPS regression coverage and preserves schema 8. See [the audit](docs/API-AUDIT.md) for results and remaining gaps.

@@ -93,7 +93,7 @@ impl Store {
                 );
                 PRAGMA user_version=1;",
             )?,
-            1..=8 => {}
+            1..=9 => {}
             _ => return Err(rusqlite::Error::InvalidQuery),
         }
         if tx.query_row("PRAGMA user_version", [], |row| row.get::<_, u32>(0))? == 1 {
@@ -127,6 +127,9 @@ impl Store {
         }
         if tx.query_row("PRAGMA user_version", [], |row| row.get::<_, u32>(0))? == 7 {
             tx.execute_batch(include_str!("../migrations/008.sql"))?;
+        }
+        if tx.query_row("PRAGMA user_version", [], |row| row.get::<_, u32>(0))? == 8 {
+            tx.execute_batch(include_str!("../migrations/009.sql"))?;
         }
         tx.commit()?;
         Ok(Self {

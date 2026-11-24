@@ -30,7 +30,7 @@ ai	GET	/makerai/user/access	apps/ai/src/ai.app.ts	263	not yet implemented
 ai	GET	/roomieai/user/facts	apps/ai/src/ai.app.ts	225	not yet implemented	
 ai	GET	/roomieai/user/access	apps/ai/src/ai.app.ts	171	not yet implemented	
 ai	GET	/gameai/room/:roomId{[0-9]+}/spendsummary	apps/ai/src/ai.app.ts	136	not yet implemented	
-ai	GET	/gameai/user/access	apps/ai/src/ai.app.ts	103	not yet implemented	
+ai	GET	/gameai/user/access	apps/ai/src/ai.app.ts	103	implemented but awaiting client verification	0.10.2 local HTTP regression; native startup requirement unverified.
 ai	GET	/	apps/ai/src/ai.app.ts	90	implemented but awaiting client verification	
 ai	GET	/openapi.json	apps/ai/src/ai.app.ts	390	not yet implemented	
 api	MOUNT	/	apps/api/src/api.app.ts	68	not yet implemented	
@@ -46,7 +46,7 @@ api	MOUNT	/	apps/api/src/api.app.ts	59	not yet implemented
 api	MOUNT	/	apps/api/src/api.app.ts	58	not yet implemented	
 api	MOUNT	/	apps/api/src/api.app.ts	57	not yet implemented	
 api	GET	/openapi.json	apps/api/src/api.app.ts	72	not yet implemented	
-api	GET	/iam/me/channels/:type	apps/api/src/routes/account.ts	12	not yet implemented	
+api	GET	/iam/me/channels/:type	apps/api/src/routes/account.ts	12	implemented but awaiting client verification	0.10.2 local HTTP regression; native startup requirement unverified.
 api	POST	/api/customAvatarItems/v1	apps/api/src/routes/avatar-studio.ts	78	not yet implemented	
 api	GET	/api/customAvatarItems/v1/me	apps/api/src/routes/avatar-studio.ts	58	not yet implemented	
 api	POST	/api/inventions/v2/delete	apps/api/src/routes/avatar.ts	2658	not yet implemented	
@@ -247,7 +247,7 @@ auth	GET	/cachedlogin/forplatformid/:platform/:id	apps/auth/src/auth.app.ts	884	
 auth	POST	/cachedlogin/forplatformid/:platform/:id	apps/auth/src/auth.app.ts	884	partially implemented	0.5 integration-tested. Same behavior as GET. Does not create an identity link.
 auth	GET	/eac/challenge	apps/auth/src/auth.app.ts	857	not yet implemented	
 auth	GET	/openapi.json	apps/auth/src/auth.app.ts	2119	not yet implemented	
-cards	GET	/iam/me/channels/:channel	apps/cards/src/cards.app.ts	26	not yet implemented	
+cards	GET	/iam/me/channels/:channel	apps/cards/src/cards.app.ts	26	implemented but awaiting client verification	0.10.2 local HTTP regression; native startup requirement unverified.
 cards	GET	/	apps/cards/src/cards.app.ts	23	implemented but awaiting client verification	
 cdn	GET	/unityasset/:filename{.+}	apps/cdn/src/cdn.app.ts	439	not yet implemented	
 cdn	HEAD	/unityasset/:filename{.+}	apps/cdn/src/cdn.app.ts	419	not yet implemented	
@@ -297,7 +297,7 @@ clubs	POST	/club/:clubId{[0-9]+}/members/leave	apps/clubs/src/clubs.app.ts	1677	
 clubs	PUT	/club/:clubId{[0-9]+}/members/invite	apps/clubs/src/clubs.app.ts	1597	not yet implemented	
 clubs	PUT	/club/:clubId{[0-9]+}/members/requesttojoin	apps/clubs/src/clubs.app.ts	1544	not yet implemented	
 clubs	DELETE	/club/:clubId{[0-9]+}	apps/clubs/src/clubs.app.ts	1499	not yet implemented	
-clubs	GET	/club/:clubId{[0-9]+}	apps/clubs/src/clubs.app.ts	1476	not yet implemented	
+clubs	GET	/club/:clubId{[0-9]+}	apps/clubs/src/clubs.app.ts	1476	implemented but awaiting client verification	0.10.2 local HTTP regression; native startup requirement unverified.
 clubs	PUT	/club/:clubId{[0-9]+}/additionalimage/:index{[0-9]+}	apps/clubs/src/clubs.app.ts	1404	not yet implemented	
 clubs	DELETE	/club/:clubId{[0-9]+}/additionalimage/:index{[0-9]+}	apps/clubs/src/clubs.app.ts	1404	not yet implemented	
 clubs	PUT	/club/:clubId{[0-9]+}/mainimage	apps/clubs/src/clubs.app.ts	1346	not yet implemented	
@@ -338,7 +338,7 @@ commerce	POST	/purchase/v1/cleanuppending	apps/commerce/src/commerce.app.ts	133	
 commerce	GET	/api/catalog/v1/all	apps/commerce/src/commerce.app.ts	111	not yet implemented	
 commerce	POST	/purchase/v1/initiatepurchase	apps/commerce/src/commerce.app.ts	90	not yet implemented	
 commerce	GET	/purchaseRestriction/isplayerrestricted	apps/commerce/src/commerce.app.ts	75	not yet implemented	
-commerce	GET	/purchase/v1/hasspentmoney	apps/commerce/src/commerce.app.ts	61	not yet implemented	
+commerce	GET	/purchase/v1/hasspentmoney	apps/commerce/src/commerce.app.ts	61	implemented but awaiting client verification	0.10.2 local HTTP regression; native startup requirement unverified.
 commerce	GET	/	apps/commerce/src/commerce.app.ts	48	implemented but awaiting client verification	
 commerce	GET	/openapi.json	apps/commerce/src/commerce.app.ts	183	not yet implemented	
 datacollection	GET	/sampling	apps/datacollection/src/datacollection.app.ts	56	not yet implemented	Excluded by the no-telemetry requirement
@@ -346,7 +346,7 @@ datacollection	POST	/data/events	apps/datacollection/src/datacollection.app.ts	4
 datacollection	POST	/data/event	apps/datacollection/src/datacollection.app.ts	38	not yet implemented	Excluded by the no-telemetry requirement
 datacollection	GET	/	apps/datacollection/src/datacollection.app.ts	31	not yet implemented	Excluded by the no-telemetry requirement
 discovery	GET	/sections/pagesource/:type	apps/discovery/src/discovery.app.ts	106	not yet implemented	
-discovery	GET	/sections/bulk	apps/discovery/src/discovery.app.ts	66	not yet implemented	
+discovery	GET	/sections/bulk	apps/discovery/src/discovery.app.ts	66	implemented but awaiting client verification	0.10.2 local HTTP regression; native startup requirement unverified.
 discovery	GET	/	apps/discovery/src/discovery.app.ts	43	implemented but awaiting client verification	
 discovery	GET	/openapi.json	apps/discovery/src/discovery.app.ts	144	not yet implemented	
 econ	POST	/api/influencerpartnerprogram/remove	apps/econ/src/econ.app.ts	7870	not yet implemented	
@@ -463,7 +463,7 @@ lists	POST	/contextualfeatures	apps/lists/src/lists.app.ts	1004	not yet implemen
 lists	GET	/algorithmiclists/:list	apps/lists/src/lists.app.ts	875	not yet implemented	
 lists	DELETE	/curatedlists/:listId/items/:itemId	apps/lists/src/lists.app.ts	821	not yet implemented	
 lists	PUT	/curatedlists/:name/items/:itemId/createlistifneeded	apps/lists/src/lists.app.ts	758	not yet implemented	
-lists	GET	/curatedlists	apps/lists/src/lists.app.ts	689	not yet implemented	
+lists	GET	/curatedlists	apps/lists/src/lists.app.ts	689	implemented but awaiting client verification	0.10.2 local HTTP regression; native startup requirement unverified.
 lists	GET	/curatedlists/bulk	apps/lists/src/lists.app.ts	632	not yet implemented	
 lists	GET	/	apps/lists/src/lists.app.ts	609	implemented but awaiting client verification	
 lists	GET	/openapi.json	apps/lists/src/lists.app.ts	1032	not yet implemented	
@@ -529,7 +529,7 @@ playersettings	GET	/playersettings	apps/playersettings/src/playersettings.app.ts
 playersettings	GET	/	apps/playersettings/src/playersettings.app.ts	138	implemented but awaiting client verification	
 playersettings	GET	/openapi.json	apps/playersettings/src/playersettings.app.ts	280	not yet implemented	
 roomcomments	POST	/comments/create/:roomId	apps/roomcomments/src/roomcomments.app.ts	155	not yet implemented	
-roomcomments	GET	/comments/get/:roomId	apps/roomcomments/src/roomcomments.app.ts	92	not yet implemented	
+roomcomments	GET	/comments/get/:roomId	apps/roomcomments/src/roomcomments.app.ts	92	implemented but awaiting client verification	0.10.2 local HTTP regression; native startup requirement unverified.
 roomcomments	GET	/	apps/roomcomments/src/roomcomments.app.ts	80	implemented but awaiting client verification	
 roomcomments	GET	/openapi.json	apps/roomcomments/src/roomcomments.app.ts	222	not yet implemented	
 rooms	GET	/photon_access_token	apps/rooms/src/rooms.app.ts	5531	partially implemented	0.4 local integration tested. Role-specific default permissions; empty token as upstream; no subroom overrides.
@@ -626,7 +626,7 @@ studio	POST	/internal/cloud-builds/:id/heartbeat	apps/studio/src/cloud-builds.ts
 studio	POST	/internal/cloud-builds/claim	apps/studio/src/cloud-builds.ts	378	not yet implemented	
 studio	POST	/cloud-builds/cancel	apps/studio/src/cloud-builds.ts	347	not yet implemented	
 studio	PUT	/cloud-builds/cancel	apps/studio/src/cloud-builds.ts	347	not yet implemented	
-studio	GET	/cloud-builds	apps/studio/src/cloud-builds.ts	339	not yet implemented	
+studio	GET	/cloud-builds	apps/studio/src/cloud-builds.ts	339	implemented but awaiting client verification	0.10.2 local HTTP regression; native startup requirement unverified.
 studio	POST	/cloud-builds/create	apps/studio/src/cloud-builds.ts	198	not yet implemented	
 studio	POST	/cloud-builds/custom-avatar-item/create-for-new-build-version	apps/studio/src/cloud-builds.ts	186	not yet implemented	
 studio	POST	/cloud-builds/custom-avatar-item/:itemId{[0-9a-fA-F-]{36}}/save/:saveId{[1-9][0-9]*}	apps/studio/src/cloud-builds.ts	182	not yet implemented	

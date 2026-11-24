@@ -2,6 +2,7 @@
 """Check trusted HTTPS discovery and bootstrap from a client-side machine."""
 import argparse
 import json
+import socket
 import ssl
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
@@ -36,9 +37,19 @@ def verify(nameserver, match, ca=None):
                 data = json.loads(body)
         except HTTPError as exc:
             raise ValueError(f"{label}: HTTP {exc.code}") from None
-        except (URLError, TimeoutError, UnicodeError, json.JSONDecodeError) as exc:
+        except URLError as exc:
+            if isinstance(exc.reason, ssl.SSLCertVerificationError):
+                reason = "TLS certificate verification failed"
+            elif isinstance(exc.reason, socket.gaierror):
+                reason = "DNS resolution failed"
+            elif isinstance(exc.reason, ConnectionRefusedError):
+                reason = "TCP connection refused"
+            else:
+                reason = type(exc.reason).__name__
+            raise ValueError(f"{label}: {reason}") from None
+        except (TimeoutError, UnicodeError, json.JSONDecodeError) as exc:
             raise ValueError(f"{label}: {type(exc).__name__}") from None
-        print(f"PASS | {label}")
+        print(f"HTTP 200 JSON | {label}")
         return data
 
     discovery = fetch(https_origin(nameserver), "/", "HTTPS discovery")
@@ -73,6 +84,7 @@ def verify(nameserver, match, ca=None):
                        and "Text" in transport["transferFormats"]
                        for transport in negotiation.get("availableTransports", []))):
         raise ValueError("SignalR negotiation: expected a text WebSocket transport")
+    print("PASS | HTTPS startup preflight")
 
 
 

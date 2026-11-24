@@ -37,7 +37,7 @@ def rss(pid):
         return int(next(line.split()[1] for line in stats if line.startswith("Rss:")))
 
 
-def smoke(binary, work, schema=8, observe=None):
+def smoke(binary, work, schema=9, observe=None):
     assets = work / "assets"
     shutil.copytree(ROOT / "assets", assets)
     (assets / "room").mkdir()
@@ -95,10 +95,16 @@ def smoke(binary, work, schema=8, observe=None):
             return request("auth", "/connect/token", "POST", urlencode(fields),
                            **{"Content-Type": "application/x-www-form-urlencoded"})
 
+        long_version = "20230414." + "0" * 32
+        assert json.loads(request("api", "/api/versioncheck/v4?v=" + long_version)[2])["VersionStatus"] == 1
+        assert grant(grant_type="password", ver=long_version)[0] == 400
         password = "temporary-testing-password"
         status, headers, body = grant(grant_type="create_account", password=password)
         assert status == 200 and headers["Cache-Control"] == "no-store"
         issued = json.loads(body)
+        if schema >= 9:
+            from catalogue_checks import check
+            check(request, work / "settings.sqlite3", issued["access_token"], signed_token(1, 1))
         status, _, body = request("accounts", "/account/me", Authorization="Bearer " + issued["access_token"])
         assert status == 200
         account = json.loads(body)
@@ -274,7 +280,7 @@ def smoke(binary, work, schema=8, observe=None):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("binary", type=Path)
-    parser.add_argument("--schema", type=int, default=8)
+    parser.add_argument("--schema", type=int, default=9)
     args = parser.parse_args()
     binary = args.binary.resolve()
     with tempfile.TemporaryDirectory() as directory:

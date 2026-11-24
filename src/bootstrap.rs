@@ -3,6 +3,10 @@ use axum::{
     response::Response,
 };
 
+pub fn supported_version(value: &str) -> bool {
+    value.len() <= 32 && value.split('.').next() == Some("20230414")
+}
+
 pub fn serve(app: &crate::App, service: &str, method: &Method, uri: &Uri) -> Response {
     let path = uri.path();
     let body = match (service, method, path) {
@@ -27,7 +31,7 @@ pub fn serve(app: &crate::App, service: &str, method: &Method, uri: &Uri) -> Res
         ("api", &Method::GET, "/api/versioncheck/v4") => {
             let supported = form_urlencoded::parse(uri.query().unwrap_or("").as_bytes())
                 .find(|(name, _)| name == "v")
-                .is_some_and(|(_, value)| value.split('.').next() == Some("20230414"));
+                .is_some_and(|(_, value)| supported_version(&value));
             let body = serde_json::json!({
                 "VersionStatus": u8::from(!supported),
                 "UpdateNotificationStage": 0,

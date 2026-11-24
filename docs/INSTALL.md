@@ -1,6 +1,6 @@
-# Install KromaRec 0.10.1 on x86-64 Linux
+# Install KromaRec 0.10.3 on x86-64 Linux
 
-Extract the ZIP into a fresh staging directory and run `sha256sum -c SHA256SUMS` inside the extracted package. Use `bin/kromarec` on Alpine and `bin/kromarec-x86_64-linux-gnu` on compatible glibc systems. The compiled Rust backend includes the routing changes. SQLite uses schema 8.
+Extract the ZIP into a fresh staging directory and run `sha256sum -c SHA256SUMS` inside the extracted package. Use `bin/kromarec` on Alpine and `bin/kromarec-x86_64-linux-gnu` on compatible glibc systems. The compiled Rust backend includes the routing changes. SQLite uses schema 9.
 
 For a fresh manual installation as the existing server user on Alpine:
 

@@ -86,9 +86,18 @@ def run(binary, caddy):
             try:
                 verify("https://ns.rec.test", "https://match.rec.test")
             except ValueError as exc:
-                assert str(exc) == "HTTPS discovery: URLError"
+                assert str(exc) == "HTTPS discovery: TLS certificate verification failed"
             else:
                 raise AssertionError("the private test CA was accepted without explicit trust")
+            for cause, reason in ((socket.gaierror(), "DNS resolution failed"),
+                                  (ConnectionRefusedError(), "TCP connection refused")):
+                with patch("socket.create_connection", side_effect=cause):
+                    try:
+                        verify("https://ns.rec.test", "https://match.rec.test", str(ca))
+                    except ValueError as exc:
+                        assert str(exc) == f"HTTPS discovery: {reason}"
+                    else:
+                        raise AssertionError(reason)
             verify("https://ns.rec.test", "https://match.rec.test", str(ca))
 
             context = ssl.create_default_context(cafile=str(ca))

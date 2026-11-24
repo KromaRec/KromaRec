@@ -204,7 +204,7 @@ def run(binary, baseline, baseline_schema=7, luxon_port=None, secure_luxon=None)
             b_id, b = account()
             c_id, c = account()
             with sqlite3.connect(db_path) as db:
-                assert db.execute("PRAGMA user_version").fetchone() == (8,)
+                assert db.execute("PRAGMA user_version").fetchone() == (9,)
                 assert db.execute("PRAGMA journal_mode").fetchone() == ("wal",)
                 assert db.execute("PRAGMA foreign_key_check").fetchall() == []
             request("api", "/api/config/v2?access_token=redact-query")
@@ -639,6 +639,8 @@ def run(binary, baseline, baseline_schema=7, luxon_port=None, secure_luxon=None)
                 assert db.execute("PRAGMA integrity_check").fetchone() == ("ok",)
             if secure_luxon:
                 dorm = request("match", "/matchmake/dorm", "POST", a)["roomInstance"]
+                from session_load import run_ten
+                run_ten(account, request, luxon_port, process.pid, sidecar.pid)
                 stalled, _ = enter(luxon_port, str(a_id), dorm["photonRoomId"], APP, issue(a))
                 import signal
                 try:

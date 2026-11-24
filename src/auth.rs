@@ -116,7 +116,7 @@ pub async fn token(store: &Store, request: Request<Body>, signup: bool) -> Respo
     let get = |name| fields.get(name).map_or("", String::as_str);
     let version = match get("ver") {
         "" => "20230414",
-        v if v.len() <= 32 && v.split('.').next() == Some("20230414") => v,
+        v if crate::bootstrap::supported_version(v) => v,
         _ => return invalid("invalid_grant", "Unsupported game version"),
     }
     .to_owned();

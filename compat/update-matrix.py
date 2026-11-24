@@ -24,6 +24,20 @@ IMPLEMENTED = {
             "GET /room/:dataBlob{.+}", "GET /invention/:dataBlob{.+}", "GET /data/:id{.+}",
             "GET /avatar/:asset{.+}", "GET /roomunityasset/:filename{.+}"},
 }
+READ_ROUTES = {
+    "ai": "/gameai/user/access",
+    "api": "/iam/me/channels/:type",
+    "cards": "/iam/me/channels/:channel",
+    "clubs": "/club/:clubId{[0-9]+}",
+    "commerce": "/purchase/v1/hasspentmoney",
+    "discovery": "/sections/bulk",
+    "lists": "/curatedlists",
+    "roomcomments": "/comments/get/:roomId",
+    "studio": "/cloud-builds",
+}
+for service, path in READ_ROUTES.items():
+    IMPLEMENTED.setdefault(service, set()).add(f"GET {path}")
+
 MILESTONE = {
     "auth": {"POST /account/me/changepassword"},
     "accounts": {"GET /account/:id/bio", "PUT /account/me/bio",

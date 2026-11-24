@@ -3,6 +3,7 @@ mod accounts;
 mod assets;
 mod auth;
 mod bootstrap;
+mod catalogue;
 mod live;
 mod notify;
 mod photon_gate;
@@ -81,15 +82,57 @@ async fn dispatch(State(app): State<Arc<App>>, request: Request<Body>) -> Respon
         .then(|| bootstrap::trace_label(service, path));
     let mut response = match (service, verb, path) {
         ("" | "ns", &Method::GET, "/") => json_body(StatusCode::OK, app.discovery.clone()),
-        ("discovery", &Method::GET, "/") => json_body(
-            StatusCode::OK,
-            r#"{"service":"discovery","status":"ok"}"#,
-        ),
-        ("ai" | "chat" | "commerce" | "img" | "roomcomments" | "rooms", &Method::GET, "/") => {
-            json_body(StatusCode::OK, format!(r#"{{"service":"{service}","status":"ok"}}"#))
+        ("discovery", &Method::GET, "/sections/bulk") => catalogue::sections(request.uri()),
+        ("commerce", &Method::GET, "/purchase/v1/hasspentmoney") => {
+            json_body(StatusCode::OK, "false")
         }
-        ("cards" | "leaderboard" | "link" | "lists" | "moderation" | "platformnotifications"
-         | "storage" | "studio", &Method::GET, "/") => "hello, world!".into_response(),
+        ("ai", &Method::GET, "/gameai/user/access") => {
+            catalogue::account_feature(&app, request.headers(), None).await
+        }
+        ("api", &Method::GET, path) if catalogue::segment(path, "/iam/me/channels/").is_some() => {
+            json_body(StatusCode::OK, "[]")
+        }
+        ("cards", &Method::GET, path)
+            if catalogue::segment(path, "/iam/me/channels/").is_some() =>
+        {
+            catalogue::account_feature(
+                &app,
+                request.headers(),
+                catalogue::segment(path, "/iam/me/channels/"),
+            )
+            .await
+        }
+        ("lists", &Method::GET, "/curatedlists") => catalogue::list(&app, request.uri()).await,
+        ("studio", &Method::GET, "/cloud-builds") => catalogue::build(&app, request.uri()).await,
+        ("clubs", &Method::GET, path) if catalogue::segment(path, "/club/").is_some() => {
+            catalogue::club(&app, &path["/club/".len()..]).await
+        }
+        ("roomcomments", &Method::GET, path)
+            if catalogue::segment(path, "/comments/get/").is_some() =>
+        {
+            catalogue::comments(&app, &path["/comments/get/".len()..], request.uri()).await
+        }
+        ("discovery", &Method::GET, "/") => {
+            json_body(StatusCode::OK, r#"{"service":"discovery","status":"ok"}"#)
+        }
+        ("ai" | "chat" | "commerce" | "img" | "roomcomments" | "rooms", &Method::GET, "/") => {
+            json_body(
+                StatusCode::OK,
+                format!(r#"{{"service":"{service}","status":"ok"}}"#),
+            )
+        }
+        (
+            "cards"
+            | "leaderboard"
+            | "link"
+            | "lists"
+            | "moderation"
+            | "platformnotifications"
+            | "storage"
+            | "studio",
+            &Method::GET,
+            "/",
+        ) => "hello, world!".into_response(),
         ("moderation", &Method::GET, "/voice/config") => {
             json_body(StatusCode::OK, r#"{"AccountId":"","ApiKey":""}"#)
         }
@@ -294,21 +337,25 @@ async fn run() -> Result<(), Box<dyn std::error::Error>> {
             "KROMAREC_SUBDOMAINS values must be DNS names relative to KROMAREC_DOMAIN".into(),
         );
     }
-    let discovery = serde_json::from_str::<std::collections::BTreeMap<String, String>>(
-        include_str!("../compat/service-hosts.json"),
-    )?
-    .into_iter()
-    .filter(|(label, _)| {
-        !matches!(
+    let services: std::collections::BTreeMap<String, String> =
+        serde_json::from_str(include_str!("../compat/service-hosts.json"))?;
+    let mut aliases = std::collections::BTreeMap::new();
+    let mut discovery = serde_json::Map::new();
+    for (label, sub) in services.into_iter().chain([("".into(), "ns".into())]) {
+        if matches!(
             label.as_str(),
             "DataCollection" | "BugReporting" | "GameLogs"
-        )
-    })
-    .map(|(label, sub)| {
-        let host = overrides.get(&sub).unwrap_or(&sub);
-        (label, json!(format!("https://{host}.{domain}")))
-    })
-    .collect::<serde_json::Map<_, _>>();
+        ) {
+            continue;
+        }
+        let host = overrides.get(&sub).unwrap_or(&sub).to_ascii_lowercase();
+        if !label.is_empty() {
+            discovery.insert(label, json!(format!("https://{host}.{domain}")));
+        }
+        if aliases.insert(host, sub).is_some() {
+            return Err("multiple services resolve to the same subdomain".into());
+        }
+    }
     let assets = env::var("KROMAREC_ASSETS").unwrap_or_else(|_| "assets".into());
     let settings = match env::var("KROMAREC_JWT_SECRET") {
         Ok(secret) if secret.len() >= 32 => {
@@ -325,40 +372,6 @@ async fn run() -> Result<(), Box<dyn std::error::Error>> {
         .parse::<usize>()?;
     if !(1..=4096).contains(&cap) {
         return Err("KROMAREC_MAX_CONNECTIONS must be between 1 and 4096".into());
-    }
-    let mut aliases = std::collections::BTreeMap::new();
-    for service in [
-        "ns",
-        "api",
-        "accounts",
-        "auth",
-        "match",
-        "rooms",
-        "notify",
-        "cdn",
-        "moderation",
-        "playersettings",
-        "ai",
-        "cards",
-        "chat",
-        "commerce",
-        "discovery",
-        "img",
-        "leaderboard",
-        "link",
-        "lists",
-        "platformnotifications",
-        "roomcomments",
-        "storage",
-        "studio",
-    ] {
-        let alias = overrides
-            .get(service)
-            .map_or(service, String::as_str)
-            .to_ascii_lowercase();
-        if aliases.insert(alias, service.to_owned()).is_some() {
-            return Err("multiple implemented services resolve to the same subdomain".into());
-        }
     }
     let mut config: serde_json::Value =
         serde_json::from_str(include_str!("../compat/api-config-v2.json"))?;
