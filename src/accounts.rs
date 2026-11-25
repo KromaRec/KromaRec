@@ -1,6 +1,6 @@
 use crate::{json_body, not_found, settings::Store};
 use axum::{
-    body::{Body, to_bytes},
+    body::{Body, HttpBody, to_bytes},
     http::{Method, Request, StatusCode, header},
     response::{IntoResponse, Response},
 };
@@ -45,6 +45,14 @@ pub fn create(db: &Connection, platforms: i64, hash: Option<String>) -> rusqlite
     )
 }
 
+pub(crate) fn is_urlencoded(mime: &str) -> bool {
+    mime.split(';')
+        .next()
+        .unwrap_or("")
+        .trim()
+        .eq_ignore_ascii_case("application/x-www-form-urlencoded")
+}
+
 pub async fn form(
     request: Request<Body>,
 ) -> Result<std::collections::BTreeMap<String, String>, StatusCode> {
@@ -59,7 +67,7 @@ pub(crate) async fn form_pairs(
         .get(header::CONTENT_TYPE)
         .and_then(|v| v.to_str().ok())
         .unwrap_or("");
-    if !mime.starts_with("application/x-www-form-urlencoded") {
+    if !is_urlencoded(mime) {
         return Err(StatusCode::UNSUPPORTED_MEDIA_TYPE);
     }
     let bytes = tokio::time::timeout(Duration::from_secs(10), to_bytes(request.into_body(), 8192))
@@ -69,6 +77,55 @@ pub(crate) async fn form_pairs(
     Ok(form_urlencoded::parse(&bytes).into_owned().collect())
 }
 
+fn public_by_id(db: &Connection, id: i64) -> rusqlite::Result<Value> {
+    let mut query =
+        db.prepare_cached(&format!("SELECT {COLUMNS} FROM local_account WHERE id=?1"))?;
+    if let Some(account) = query.query_row([id], profile).optional()? {
+        return Ok(account);
+    }
+    let created = db.query_row("SELECT strftime('%Y-%m-%dT%H:%M:%fZ','now')", [], |r| {
+        r.get(0)
+    })?;
+    Ok(dto(id, format!("Player{id}"), 0, created))
+}
+
+async fn bulk(store: &Store, request: Request<Body>, method: Method) -> Response {
+    let mut fields: Vec<_> = form_urlencoded::parse(request.uri().query().unwrap_or("").as_bytes())
+        .into_owned()
+        .collect();
+    if method == Method::POST && request.body().size_hint().exact() != Some(0) {
+        match form_pairs(request).await {
+            Ok(body) => fields.extend(body),
+            Err(status) => return status.into_response(),
+        }
+    }
+    let mut ids = Vec::new();
+    for (_, value) in fields.iter().filter(|(key, _)| key == "id") {
+        for id in value
+            .split(',')
+            .filter_map(|s| s.trim().parse::<i64>().ok())
+        {
+            if !ids.contains(&id) {
+                if ids.len() == 100 {
+                    return StatusCode::BAD_REQUEST.into_response();
+                }
+                ids.push(id);
+            }
+        }
+    }
+    match store
+        .with_db(move |db| {
+            ids.into_iter()
+                .map(|id| public_by_id(db, id))
+                .collect::<rusqlite::Result<Vec<_>>>()
+        })
+        .await
+    {
+        Ok(rows) => json_body(StatusCode::OK, json!(rows).to_string()),
+        Err(_) => StatusCode::INTERNAL_SERVER_ERROR.into_response(),
+    }
+}
+
 pub async fn serve(
     store: &Store,
     request: Request<Body>,
@@ -76,6 +133,9 @@ pub async fn serve(
     signup: bool,
 ) -> Response {
     let path = request.uri().path();
+    if path == "/account/bulk" && matches!(method, Method::GET | Method::POST) {
+        return bulk(store, request, method).await;
+    }
     if method == Method::POST && path == "/account/create" {
         if !signup {
             return StatusCode::FORBIDDEN.into_response();
@@ -187,22 +247,7 @@ pub async fn serve(
     };
     let found = store
         .with_db(move |db| match query {
-            Lookup::Id(id) => {
-                let mut statement =
-                    db.prepare_cached(&format!("SELECT {COLUMNS} FROM local_account WHERE id=?1"))?;
-                let value = statement.query_row([id], profile).optional()?;
-                match value {
-                    Some(value) => Ok((StatusCode::OK, value)),
-                    None => {
-                        let now: String = db.query_row(
-                            "SELECT strftime('%Y-%m-%dT%H:%M:%fZ','now')",
-                            [],
-                            |row| row.get(0),
-                        )?;
-                        Ok((StatusCode::OK, dto(id, format!("Player{id}"), 0, now)))
-                    }
-                }
-            }
+            Lookup::Id(id) => Ok((StatusCode::OK, public_by_id(db, id)?)),
             Lookup::Name(name) => {
                 let mut statement = db.prepare_cached(&format!(
                     "SELECT {COLUMNS} FROM local_account WHERE username=?1"

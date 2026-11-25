@@ -409,7 +409,7 @@ dependencies = [
 
 [[package]]
 name = "kromarec"
-version = "0.10.3"
+version = "0.10.4"
 dependencies = [
  "argon2",
  "axum",

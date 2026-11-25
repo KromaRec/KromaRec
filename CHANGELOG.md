@@ -1,3 +1,10 @@
+# KromaRec 0.10.4
+
+- Refuse an explicit SQLite database path without the JWT signing secret. The startup banner identifies persistent or stateless mode. The binary supports `--version`.
+- Implement the two pinned matchmaking region latency acknowledgements and bounded, ordered public bulk account lookup by query and URL-encoded form. Fix form media-type case handling and prefix lookalikes.
+- Reconcile all 689 reference entries and preserve hand-maintained classifications when refreshing the inventory. Publish exact anonymous HTTP errors, direct and TLS host results, and a reproducible Orientation diagnostic.
+- Both Linux binaries were rebuilt. SQLite remains at schema 9. See [verification](docs/verification-0.10.4.md) for workloads, security tests, and native Windows blockers.
+
 # KromaRec 0.10.3
 
 - Validate all advertised service hostnames and the NameServer together before opening SQLite. Conflicting custom hostnames previously sent clients to the wrong service.

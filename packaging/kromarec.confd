@@ -4,8 +4,9 @@ export KROMAREC_ASSETS='/usr/local/share/kromarec/assets'
 export KROMAREC_DB='/var/lib/kromarec/kromarec.sqlite3'
 export KROMAREC_MAX_CONNECTIONS='128'
 export KROMAREC_PASSWORD_SIGNUP='false'
-# Set a private random value of at least 32 bytes before enabling authentication.
-# export KROMAREC_JWT_SECRET='replace-with-a-random-secret'
+# This configuration selects persistent storage. Export the existing private
+# KROMAREC_JWT_SECRET (minimum 32 bytes) here or source a private environment
+# with set -a before enabling the service. Keep this file mode 0600.
 
 # Match the app IDs configured in both 20230414 clients.
 # export KROMAREC_PHOTON_REALTIME_APP_ID=''

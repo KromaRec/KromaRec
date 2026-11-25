@@ -1,16 +1,17 @@
-# KromaRec 0.10.1 two-client deployment and acceptance
+# KromaRec 0.10.4 two-client deployment and acceptance
+
+The first observed Windows blocker is the discovery TLS certificate verifier. See [native acceptance](native-client-0.10.4.md) for the checkpoint. The encrypted synthetic probe passed separately.
 
 ## Prepare the server
 
 1. Use the bundled KromaRec static musl executable on Alpine x86-64 or the
    bundled glibc executable on Debian 13 or a compatible distribution.
-   Back up an existing database before starting 0.10. Schema 8 preserves
-   existing room coordinates and adds a default matchmaking policy.
+   Back up an existing database before upgrading. Versions 0.10.2 through 0.10.4 share schema 9.
 2. Run the bundled `bin/luxon-kromarec-x86_64-linux-gnu` on a compatible
    glibc host. On Alpine, build the patched transport natively with Git,
    CMake 3.21+, a sufficiently recent C++23 compiler and standard library,
    make, Python 3 and development headers. Run
-   `packaging/luxon/build.sh /path/to/fresh-build`. It checks out the
+   `sh packaging/luxon/build.sh /path/to/fresh-build`. It checks out the
    exact [Luxon 1.5 commit](https://github.com/niansa/LuxonServer/tree/e4bab98d8d6b3aee9ecf4035309a78a59b584f93)
    and builds `build/luxon_server`. The supported integration is same-host.
 3. Set up DNS for your RecNet suffix and every advertised subdomain.
@@ -49,7 +50,7 @@ needed for this self-hosted setup.
    the same gate settings, change to the directory containing Luxon's
    `config.yml`, and run the patched executable. Stop Luxon first, then
    stop KromaRec with SIGTERM. With OpenRC, install the core
-   as described in the main README, then install the transport as follows.
+   as described in [installation](../docs/INSTALL.md), then install the transport as follows.
 
 ```sh
 install -m 0755 /path/to/build/luxon_server /usr/local/libexec/luxon-kromarec
@@ -139,7 +140,7 @@ the existing Orientation startup sequence, logout preserves the reservation
 and ticket. A password change requires fresh HTTP credentials and a fresh
 Photon ticket. A direct Photon transport disconnect preserves the reservation
 until RecNet logout or expiry.
-Use the Luxon extension built or bundled with **0.10.1**. It holds one
+Use the Luxon extension built or bundled with **0.10.4**. It holds one
 loopback connection per Game actor. Logout and password changes invalidate
 open SignalR sockets and notify Luxon after the database commit. Luxon
 disconnects the actor on its existing slow update. An account can reconnect
@@ -172,7 +173,7 @@ python3 tools/https_proxy_smoke.py bin/kromarec
 For a repeatable HTTP RSS measurement run `python3 tools/memory_rss.py bin/kromarec bin/kromarec-x86_64-linux-gnu`. The secure room suite prints separate and combined RSS when both Photon peers are admitted.
 
 The suite starts temporary local processes and sends real Photon operations.
-It tests transport admission and event relay. See [verification](verification-0.10.1.md)
+It tests transport admission and event relay. See [verification](../docs/verification-0.10.4.md)
 for its coverage and the outstanding gameplay and Photon Voice checks.
 
 

@@ -16,8 +16,8 @@ accounts	GET	/parentalcontrol/me	apps/accounts/src/accounts.app.ts	605	not yet i
 accounts	POST	/account/create	apps/accounts/src/accounts.app.ts	576	implemented but awaiting client verification	Requires explicit signup opt-in
 accounts	GET	/account/:id	apps/accounts/src/accounts.app.ts	545	implemented but awaiting client verification	
 accounts	GET	/account/:id/bio	apps/accounts/src/accounts.app.ts	517	implemented but awaiting client verification	Covered by local HTTP smoke tests; real-time notifications pending
-accounts	POST	/account/bulk	apps/accounts/src/accounts.app.ts	515	not yet implemented	
-accounts	GET	/account/bulk	apps/accounts/src/accounts.app.ts	510	not yet implemented	
+accounts	POST	/account/bulk	apps/accounts/src/accounts.app.ts	515	partially implemented	0.10.4 ordered public DTOs, strict signed integer IDs and 100-ID limit. POST accepts URL-encoded fields.
+accounts	GET	/account/bulk	apps/accounts/src/accounts.app.ts	510	partially implemented	0.10.4 ordered public DTOs, strict signed integer IDs and 100-ID limit. POST accepts URL-encoded fields.
 accounts	GET	/account/username/:name	apps/accounts/src/accounts.app.ts	479	implemented but awaiting client verification	
 accounts	GET	/account/search	apps/accounts/src/accounts.app.ts	439	not yet implemented	
 accounts	GET	/account/me	apps/accounts/src/accounts.app.ts	411	implemented but awaiting client verification	
@@ -476,8 +476,8 @@ match	PUT	/roominstance/:id/matchpolicy	apps/match/src/match.app.ts	3657	impleme
 match	PUT	/roominstance/:id/inprogress	apps/match/src/match.app.ts	3615	partially implemented	0.4 local integration tested. Active members update round state; prevents ordinary public reuse.
 match	POST	/roominstance/:id/reportjoinresult	apps/match/src/match.app.ts	3598	partially implemented	0.4 local integration tested. Reference protocol acknowledgement; no gameplay evidence.
 match	POST	/invite	apps/match/src/match.app.ts	3523	partially implemented	0.4 local integration tested. Persistent expiring live-instance invitation and SignalR delivery for 2023.
-match	PUT	/player/gameserverregionpings	apps/match/src/match.app.ts	3501	not yet implemented	
-match	PUT	/player/photonregionpings	apps/match/src/match.app.ts	3491	not yet implemented	
+match	PUT	/player/gameserverregionpings	apps/match/src/match.app.ts	3501	implemented but awaiting client verification	0.10.4 exact PUT empty acknowledgement per pinned reference. No identity or reservation changes.
+match	PUT	/player/photonregionpings	apps/match/src/match.app.ts	3491	implemented but awaiting client verification	0.10.4 exact PUT empty acknowledgement per pinned reference. No identity or reservation changes.
 match	GET	/player/qos	apps/match/src/match.app.ts	3474	not yet implemented	
 match	GET	/player/connection-info	apps/match/src/match.app.ts	3364	partially implemented	Scoped 15-minute Realtime JWT with revocation generations, no-store. Luxon handoffs and admission protocol tested. Native ticket binding and Voice pending.
 match	POST	/matchmake/dorm	apps/match/src/match.app.ts	3325	partially implemented	0.4 local integration tested. Private provisioned dorm allocation.

@@ -1,4 +1,4 @@
-"""Exercise first-time scene admission and a ten-actor loopback RecCenter room."""
+"""Exercise scene admission and event fan-out with ten or twenty local actors."""
 import time
 from contextlib import ExitStack
 
@@ -7,8 +7,10 @@ from memory_rss import cpu_seconds
 from smoke import rss
 
 
-def run_ten(account, request, port, backend_pid, luxon_pid):
-    users = [account() for _ in range(10)]
+def run_load(account, request, port, backend_pid, luxon_pid, players=10):
+    # The shipped RecCenter has 12 slots. Park supports 20 without a seed change.
+    room_id = {10: 2, 20: 25}[players]
+    users = [account() for _ in range(players)]
 
     def join(player, token, path):
         room = request("match", path, "POST", token)["roomInstance"]
@@ -33,12 +35,12 @@ def run_ten(account, request, port, backend_pid, luxon_pid):
     with ExitStack() as sockets:
         peers, actors, instances = [], set(), set()
         for player, token in users:
-            room, peer, actor = join(player, token, "/matchmake/room/2")
+            room, peer, actor = join(player, token, f"/matchmake/room/{room_id}")
             sockets.callback(peer.close)
             instances.add((room["roomInstanceId"], room["photonRoomId"]))
             actors.add(actor)
             peers.append((peer, actor))
-        assert len(instances) == 1 and len(actors) == 10
+        assert len(instances) == 1 and len(actors) == players
         pids = (backend_pid, luxon_pid)
         start = time.monotonic()
         before = [cpu_seconds(pid) for pid in pids]
@@ -53,7 +55,8 @@ def run_ten(account, request, port, backend_pid, luxon_pid):
             time.sleep(1)
         elapsed = time.monotonic() - start
         cpu = [cpu_seconds(pid) - base for pid, base in zip(pids, before)]
-        print(f"PASS | Orientation and dorm wire admission; ten RecCenter actors, 900 deliveries in {elapsed:.3f}s"
+        deliveries = 10 * players * (players - 1)
+        print(f"PASS | Orientation and dorm wire admission; {players} actors in room {room_id}, {deliveries} deliveries in {elapsed:.3f}s"
               f" | RSS KiB {rss(backend_pid)}/{rss(luxon_pid)} | CPU seconds {cpu[0]:.3f}/{cpu[1]:.3f}")
         for peer, _ in peers:
             peer.operation(254, {})

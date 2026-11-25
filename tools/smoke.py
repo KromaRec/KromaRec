@@ -38,6 +38,8 @@ def rss(pid):
 
 
 def smoke(binary, work, schema=9, observe=None):
+    from release_checks import startup, routes
+    startup(binary)
     assets = work / "assets"
     shutil.copytree(ROOT / "assets", assets)
     (assets / "room").mkdir()
@@ -108,6 +110,7 @@ def smoke(binary, work, schema=9, observe=None):
         status, _, body = request("accounts", "/account/me", Authorization="Bearer " + issued["access_token"])
         assert status == 200
         account = json.loads(body)
+        routes(request, account)
         assert account["accountId"] == 2 and account["email"] == ""
         status, _, body = request("accounts", "/account/2")
         assert status == 200 and "email" not in json.loads(body)

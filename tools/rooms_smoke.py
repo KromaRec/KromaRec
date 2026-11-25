@@ -70,7 +70,7 @@ class HubSocket:
         self.sock.close()
 
 
-def run(binary, baseline, baseline_schema=7, luxon_port=None, secure_luxon=None):
+def run(binary, baseline, baseline_schema=7, luxon_port=None, secure_luxon=None, load_players=10):
     with tempfile.TemporaryDirectory() as directory:
         db_path = Path(directory) / "test.sqlite3"
         with socket.socket() as listener:
@@ -639,8 +639,8 @@ def run(binary, baseline, baseline_schema=7, luxon_port=None, secure_luxon=None)
                 assert db.execute("PRAGMA integrity_check").fetchone() == ("ok",)
             if secure_luxon:
                 dorm = request("match", "/matchmake/dorm", "POST", a)["roomInstance"]
-                from session_load import run_ten
-                run_ten(account, request, luxon_port, process.pid, sidecar.pid)
+                from session_load import run_load
+                run_load(account, request, luxon_port, process.pid, sidecar.pid, players=load_players)
                 stalled, _ = enter(luxon_port, str(a_id), dorm["photonRoomId"], APP, issue(a))
                 import signal
                 try:
@@ -680,5 +680,6 @@ if __name__ == "__main__":
     parser.add_argument("--baseline-schema", type=int, default=7)
     parser.add_argument("--luxon-port", type=int)
     parser.add_argument("--secure-luxon", type=Path)
+    parser.add_argument("--load-players", type=int, choices=(10,20), default=10, help="actor count with --secure-luxon")
     args = parser.parse_args()
-    run(args.binary.resolve(), args.baseline.resolve() if args.baseline else None, args.baseline_schema, args.luxon_port, args.secure_luxon.resolve() if args.secure_luxon else None)
+    run(args.binary.resolve(), args.baseline.resolve() if args.baseline else None, args.baseline_schema, args.luxon_port, args.secure_luxon.resolve() if args.secure_luxon else None, args.load_players)

@@ -129,7 +129,7 @@ async fn target(request: Request<Body>) -> Result<Option<i64>, StatusCode> {
         .and_then(|s| s.to_str().ok())
         .unwrap_or("");
     let is_json = mime.contains("application/json");
-    let is_form = mime.starts_with("application/x-www-form-urlencoded");
+    let is_form = crate::accounts::is_urlencoded(mime);
     let body = read_body(request).await?;
     if is_json {
         let value: Value = serde_json::from_slice(&body).unwrap_or_default();

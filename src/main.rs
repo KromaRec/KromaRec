@@ -156,6 +156,9 @@ async fn dispatch(State(app): State<Arc<App>>, request: Request<Body>) -> Respon
         ("rooms", _, _) => {
             rooms::serve(app.settings.as_deref(), &app.hub, request, verb.clone()).await
         }
+        ("match", &Method::PUT, "/player/photonregionpings" | "/player/gameserverregionpings") => {
+            StatusCode::OK.into_response()
+        }
         ("match", _, _) => {
             sessions::serve(
                 app.settings.as_deref(),
@@ -315,6 +318,13 @@ fn valid_domain(domain: &str) -> bool {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    if env::args_os()
+        .skip(1)
+        .eq([std::ffi::OsString::from("--version")])
+    {
+        println!("KromaRec {}", env!("CARGO_PKG_VERSION"));
+        return Ok(());
+    }
     tokio::runtime::Builder::new_current_thread()
         .enable_all()
         .max_blocking_threads(4)
@@ -363,6 +373,12 @@ async fn run() -> Result<(), Box<dyn std::error::Error>> {
             Some(Arc::new(settings::Store::open(&path, secret.into_bytes())?))
         }
         Ok(_) => return Err("KROMAREC_JWT_SECRET must contain at least 32 bytes".into()),
+        Err(env::VarError::NotPresent) if env::var_os("KROMAREC_DB").is_some() => {
+            return Err(
+                "KROMAREC_DB requires KROMAREC_JWT_SECRET; load the existing server environment"
+                    .into(),
+            );
+        }
         Err(env::VarError::NotPresent) => None,
         Err(error) => return Err(error.into()),
     };
@@ -390,9 +406,18 @@ async fn run() -> Result<(), Box<dyn std::error::Error>> {
         signup: env::var("KROMAREC_PASSWORD_SIGNUP").as_deref() == Ok("true"),
     });
     let _photon_gate = photon_gate::start(&app)?;
+    let database = if app.settings.is_some() {
+        "ready"
+    } else {
+        "disabled (load KROMAREC_JWT_SECRET for rooms and accounts)"
+    };
     let routes = axum::Router::new().fallback(dispatch).with_state(app);
     let tcp = TcpListener::bind(&bind).await?;
-    eprintln!("KromaRec listening on {}", tcp.local_addr()?);
+    eprintln!(
+        "KromaRec listening on {} version={} database={database}",
+        tcp.local_addr()?,
+        env!("CARGO_PKG_VERSION")
+    );
     let (trigger, shutdown) = tokio::sync::oneshot::channel();
     let server = axum::serve(
         BoundedListener {

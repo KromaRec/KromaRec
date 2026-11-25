@@ -375,7 +375,7 @@ async fn parse_pairs(bytes: &[u8], mime: &str, deleting: bool) -> Vec<(String, S
                 Err(_) => return Vec::new(),
             }
         }
-    } else if deleting || mime.contains("application/x-www-form-urlencoded") {
+    } else if deleting || crate::accounts::is_urlencoded(mime) {
         for (name, value) in form_urlencoded::parse(bytes) {
             match name.as_ref() {
                 "key" => result.0 = value.into_owned(),
